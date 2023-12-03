@@ -1,17 +1,17 @@
-package genetics;
+package genetics.procedure;
 
-import genetics.Bitstring;
-import genetics.Hypothesis;
+import genetics.representation.BitString;
+import genetics.representation.Hypothesis;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Crossover {
 
-    private Bitstring mask;
+    private BitString mask;
     private List<Hypothesis> hypotheses;
 
-    public Crossover(Bitstring mask) {
+    public Crossover(BitString mask) {
         this.hypotheses = new ArrayList<>();
         this.mask = mask;
     }

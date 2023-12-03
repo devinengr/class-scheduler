@@ -1,4 +1,4 @@
-package genetics;
+package genetics.representation;
 
 public class Hypothesis {
 

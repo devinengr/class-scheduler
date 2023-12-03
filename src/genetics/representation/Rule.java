@@ -1,11 +1,11 @@
-package genetics;
+package genetics.representation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rule {
 
-    private List<Bitstring> bitstringList;
+    private List<BitString> bitstringList;
 
     public Rule() {
         this.bitstringList = new ArrayList<>();

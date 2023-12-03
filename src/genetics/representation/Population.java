@@ -1,4 +1,4 @@
-package genetics;
+package genetics.representation;
 
 import java.util.ArrayList;
 import java.util.List;

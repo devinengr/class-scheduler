@@ -1,4 +1,6 @@
-package representation;
+package implementation;
+
+import genetics.representation.Category;
 
 public class Professor extends Category {
 
