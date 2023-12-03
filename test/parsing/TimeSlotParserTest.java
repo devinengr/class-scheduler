@@ -1,6 +1,8 @@
 package parsing;
 
 import implementation.TimeSlot;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -10,6 +12,45 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TimeSlotParserTest {
+
+    private List<DayOfWeek> listMW;
+    private List<DayOfWeek> listMF;
+    private List<DayOfWeek> listMWF;
+    private List<DayOfWeek> listTR;
+
+    void testParser(TimeSlotParser parser, int index,
+                    String line, int lineNumber,
+                    int minutesStart, int minutesEnd,
+                    List<DayOfWeek> expectedDaysOfWeek) {
+        parser.parseLine(line, lineNumber);
+        TimeSlot timeSlot = parser.getTimeSlotList().get(index);
+        List<DayOfWeek> actualDaysOfWeek = timeSlot.getDaysOfWeek();
+        assertEquals(expectedDaysOfWeek.size(), actualDaysOfWeek.size());
+        for (int i = 0; i < expectedDaysOfWeek.size(); i++) {
+            assertEquals(expectedDaysOfWeek.get(i), actualDaysOfWeek.get(i));
+        }
+        assertEquals(minutesStart, timeSlot.getMinutesStart());
+        assertEquals(minutesEnd, timeSlot.getMinutesEnd());
+    }
+
+    void testDaysOfWeek(TimeSlotParser parser, String days,
+                        List<DayOfWeek> expectedDaysOfWeek) {
+        TimeSlot timeSlot = new TimeSlot();
+        parser.parseDaysOfWeek(timeSlot, days);
+        List<DayOfWeek> actualDaysOfWeek = timeSlot.getDaysOfWeek();
+        assertEquals(expectedDaysOfWeek.size(), actualDaysOfWeek.size());
+        for (int i = 0; i < expectedDaysOfWeek.size(); i++) {
+            assertEquals(expectedDaysOfWeek.get(i), actualDaysOfWeek.get(i));
+        }
+    }
+
+    @BeforeEach
+    void init() {
+        listMW = List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
+        listMF = List.of(DayOfWeek.MONDAY, DayOfWeek.FRIDAY);
+        listMWF = List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY);
+        listTR = List.of(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
+    }
 
     @Test
     void getTimeInMinutes() {
@@ -74,233 +115,44 @@ class TimeSlotParserTest {
         assertEquals(770, timeSlot.getMinutesEnd());
     }
 
+
+
     @Test
     void parseLineMultiple() {
         TimeSlotParser parser = new TimeSlotParser();
-        parser.parseLine("1,MW 1 - 2:15", 2);
-        parser.parseLine("1,MWF 11-11:50am", 3);
-        // 1st time slot
-        {
-            TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.WEDNESDAY, daysOfWeek.get(1));
-            assertEquals(780, timeSlot.getMinutesStart());
-            assertEquals(855, timeSlot.getMinutesEnd());
-        }
-        // 2nd time slot
-        {
-            TimeSlot timeSlot = parser.getTimeSlotList().get(1);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(3, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.WEDNESDAY, daysOfWeek.get(1));
-            assertEquals(DayOfWeek.FRIDAY, daysOfWeek.get(2));
-            assertEquals(660, timeSlot.getMinutesStart());
-            assertEquals(710, timeSlot.getMinutesEnd());
-        }
+        List<DayOfWeek> list1 = List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
+        List<DayOfWeek> list2 = List.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY);
+        testParser(parser, 0, "1,MW 1 - 2:15", 2, 780, 855, list1);
+        testParser(parser, 1, "1,MWF 11-11:50am", 3, 660, 710, list2);
     }
 
     @Test
     void parseLineIgnoresHeader() {
         TimeSlotParser parser = new TimeSlotParser();
-        parser.parseLine("1,MW 11:30 - 12:45pm", 1);
-        Executable exec = () -> parser.getTimeSlotList().get(0);
+        Executable exec = () -> testParser(parser, 0, "1,MW 11:30 - 12:45pm", 1, 690, 765, listMW);
         assertThrows(IndexOutOfBoundsException.class, exec);
-
-        parser.parseLine("1,MWF 11-11:50am", 2);
-        TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-        List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-        assertEquals(3, daysOfWeek.size());
-        assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-        assertEquals(DayOfWeek.WEDNESDAY, daysOfWeek.get(1));
-        assertEquals(DayOfWeek.FRIDAY, daysOfWeek.get(2));
-        assertEquals(660, timeSlot.getMinutesStart());
-        assertEquals(710, timeSlot.getMinutesEnd());
+        testParser(parser, 0, "1,MWF 11-11:50am", 2, 660, 710, listMWF);
     }
 
     @Test
     void parseDaysOfWeek() {
-        TimeSlotParser parser = new TimeSlotParser();
-        // MF
-        {
-            TimeSlot timeSlot = new TimeSlot();
-            parser.parseDaysOfWeek(timeSlot, "MF");
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.FRIDAY, daysOfWeek.get(1));
-        }
-        // MW
-        {
-            TimeSlot timeSlot = new TimeSlot();
-            parser.parseDaysOfWeek(timeSlot, "MW");
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.WEDNESDAY, daysOfWeek.get(1));
-        }
-        // MWF
-        {
-            TimeSlot timeSlot = new TimeSlot();
-            parser.parseDaysOfWeek(timeSlot, "MWF");
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(3, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.WEDNESDAY, daysOfWeek.get(1));
-            assertEquals(DayOfWeek.FRIDAY, daysOfWeek.get(2));
-        }
-        // TR
-        {
-            TimeSlot timeSlot = new TimeSlot();
-            parser.parseDaysOfWeek(timeSlot, "TR");
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.TUESDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.THURSDAY, daysOfWeek.get(1));
-        }
+        testDaysOfWeek(new TimeSlotParser(), "MF", listMF);
+        testDaysOfWeek(new TimeSlotParser(), "MW", listMW);
+        testDaysOfWeek(new TimeSlotParser(), "MWF", listMWF);
+        testDaysOfWeek(new TimeSlotParser(), "TR", listTR);
     }
 
     @Test
     void parseLine() {
-        // MW 11:30 - 12:45pm
-        // daysOfWeek: [Monday, Wednesday]
-        // minutesStart: 690
-        // minutesEnd: 765
-        {
-            TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("1,MW 11:30 - 12:45pm", 2);
-            TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.WEDNESDAY, daysOfWeek.get(1));
-            assertEquals(690, timeSlot.getMinutesStart());
-            assertEquals(765, timeSlot.getMinutesEnd());
-        }
-        // MW 1 - 2:15
-        // daysOfWeek: [Monday, Wednesday]
-        // minutesStart: 780
-        // minutesEnd: 855
-        {
-            TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("1,MW 1 - 2:15", 0);
-            TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.WEDNESDAY, daysOfWeek.get(1));
-            assertEquals(780, timeSlot.getMinutesStart());
-            assertEquals(855, timeSlot.getMinutesEnd());
-        }
-        // MF 7 - 8:15pm
-        // daysOfWeek: [Monday, Friday]
-        // minutesStart: 1140
-        // minutesEnd: 1215
-        {
-            TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("1,MF 7 - 8:15pm", 3);
-            TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.FRIDAY, daysOfWeek.get(1));
-            assertEquals(1140, timeSlot.getMinutesStart());
-            assertEquals(1215, timeSlot.getMinutesEnd());
-        }
-        // MWF 11-11:50am
-        // daysOfWeek: [Monday, Wednesday, Friday]
-        // minutesStart: 660
-        // minutesEnd: 710
-        {
-            TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("1,MWF 11-11:50am", 4);
-            TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(3, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.WEDNESDAY, daysOfWeek.get(1));
-            assertEquals(DayOfWeek.FRIDAY, daysOfWeek.get(2));
-            assertEquals(660, timeSlot.getMinutesStart());
-            assertEquals(710, timeSlot.getMinutesEnd());
-        }
-        // MWF 12 - 12:50pm
-        // daysOfWeek: [Monday, Wednesday, Friday]
-        // minutesStart: 720
-        // minutesEnd: 770
-        {
-            TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("1,MWF 12-12:50pm", 5);
-            TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(3, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.WEDNESDAY, daysOfWeek.get(1));
-            assertEquals(DayOfWeek.FRIDAY, daysOfWeek.get(2));
-            assertEquals(720, timeSlot.getMinutesStart());
-            assertEquals(770, timeSlot.getMinutesEnd());
-        }
-        // TR 8:30 - 9:15am
-        // daysOfWeek: [Tuesday, Thursday]
-        // minutesStart: 510
-        // minutesEnd: 555
-        {
-            TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("1,TR 8:30 - 9:15am", 5);
-            TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.TUESDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.THURSDAY, daysOfWeek.get(1));
-            assertEquals(510, timeSlot.getMinutesStart());
-            assertEquals(555, timeSlot.getMinutesEnd());
-        }
-        // MW 11am - 12:50pm
-        // daysOfWeek: [Monday, Wednesday]
-        // minutesStart: 660
-        // minutesEnd: 770
-        {
-            TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("1,MW 11am - 12:50pm", 6);
-            TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.WEDNESDAY, daysOfWeek.get(1));
-            assertEquals(660, timeSlot.getMinutesStart());
-            assertEquals(770, timeSlot.getMinutesEnd());
-        }
-        // TR 10 - 11:50am
-        // daysOfWeek: [Tuesday, Thursday]
-        // minutesStart: 600
-        // minutesEnd: 710
-        {
-            TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("1,TR 10 - 11:50am", 7);
-            TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.TUESDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.THURSDAY, daysOfWeek.get(1));
-            assertEquals(600, timeSlot.getMinutesStart());
-            assertEquals(710, timeSlot.getMinutesEnd());
-        }
-        // MF 4 - 5:15
-        // daysOfWeek: [Monday, Friday]
-        // minutesStart: 960
-        // minutesEnd: 1035
-        {
-            TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("1,MF 4 - 5:15", 8);
-            TimeSlot timeSlot = parser.getTimeSlotList().get(0);
-            List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
-            assertEquals(2, daysOfWeek.size());
-            assertEquals(DayOfWeek.MONDAY, daysOfWeek.get(0));
-            assertEquals(DayOfWeek.FRIDAY, daysOfWeek.get(1));
-            assertEquals(960, timeSlot.getMinutesStart());
-            assertEquals(1035, timeSlot.getMinutesEnd());
-        }
+        testParser(new TimeSlotParser(), 0, "1,MW 11:30 - 12:45pm", 2, 690, 765, listMW);
+        testParser(new TimeSlotParser(), 0, "1,MW 1 - 2:15", 0, 780, 855, listMW);
+        testParser(new TimeSlotParser(), 0, "1,MF 7 - 8:15pm", 3, 1140, 1215, listMF);
+        testParser(new TimeSlotParser(), 0, "1,MWF 11-11:50am", 4, 660, 710, listMWF);
+        testParser(new TimeSlotParser(), 0, "1,MWF 12-12:50pm", 5, 720, 770, listMWF);
+        testParser(new TimeSlotParser(), 0, "1,TR 8:30 - 9:15am", 5, 510, 555, listTR);
+        testParser(new TimeSlotParser(), 0, "1,MW 11am - 12:50pm", 6, 660, 770, listMW);
+        testParser(new TimeSlotParser(), 0, "1,TR 10 - 11:50am", 7, 600, 710, listTR);
+        testParser(new TimeSlotParser(), 0, "1,MF 4 - 5:15", 8, 960, 1035, listMF);
     }
 
 }

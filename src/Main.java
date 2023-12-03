@@ -1,5 +1,3 @@
-package main;
-
 import parsing.CSVReader;
 import parsing.TimeSlotParser;
 
