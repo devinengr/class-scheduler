@@ -166,9 +166,9 @@ public class TimeSlotParser implements FileParser {
         TimeSlot timeSlot = new TimeSlot();
         String[] split = Arrays.stream(line.split("[, -]"))
                 .filter(s -> !s.isEmpty()).toArray(String[]::new);
-        String daysOfWeek = split[0];
-        String timeStart = split[1];
-        String timeEnd = split[2];
+        String daysOfWeek = split[1];
+        String timeStart = split[2];
+        String timeEnd = split[3];
         parseDaysOfWeek(timeSlot, daysOfWeek);
         parseTime(timeSlot, timeStart, timeEnd);
         timeSlotList.add(timeSlot);

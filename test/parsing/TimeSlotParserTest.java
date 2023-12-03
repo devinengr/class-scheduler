@@ -77,8 +77,8 @@ class TimeSlotParserTest {
     @Test
     void parseLineMultiple() {
         TimeSlotParser parser = new TimeSlotParser();
-        parser.parseLine("MW 1 - 2:15", 2);
-        parser.parseLine("MWF 11-11:50am", 3);
+        parser.parseLine("1,MW 1 - 2:15", 2);
+        parser.parseLine("1,MWF 11-11:50am", 3);
         // 1st time slot
         {
             TimeSlot timeSlot = parser.getTimeSlotList().get(0);
@@ -105,11 +105,11 @@ class TimeSlotParserTest {
     @Test
     void parseLineIgnoresHeader() {
         TimeSlotParser parser = new TimeSlotParser();
-        parser.parseLine("MW 11:30 - 12:45pm", 1);
+        parser.parseLine("1,MW 11:30 - 12:45pm", 1);
         Executable exec = () -> parser.getTimeSlotList().get(0);
         assertThrows(IndexOutOfBoundsException.class, exec);
 
-        parser.parseLine("MWF 11-11:50am", 2);
+        parser.parseLine("1,MWF 11-11:50am", 2);
         TimeSlot timeSlot = parser.getTimeSlotList().get(0);
         List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
         assertEquals(3, daysOfWeek.size());
@@ -170,7 +170,7 @@ class TimeSlotParserTest {
         // minutesEnd: 765
         {
             TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("MW 11:30 - 12:45pm", 2);
+            parser.parseLine("1,MW 11:30 - 12:45pm", 2);
             TimeSlot timeSlot = parser.getTimeSlotList().get(0);
             List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
             assertEquals(2, daysOfWeek.size());
@@ -185,7 +185,7 @@ class TimeSlotParserTest {
         // minutesEnd: 855
         {
             TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("MW 1 - 2:15", 0);
+            parser.parseLine("1,MW 1 - 2:15", 0);
             TimeSlot timeSlot = parser.getTimeSlotList().get(0);
             List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
             assertEquals(2, daysOfWeek.size());
@@ -200,7 +200,7 @@ class TimeSlotParserTest {
         // minutesEnd: 1215
         {
             TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("MF 7 - 8:15pm", 3);
+            parser.parseLine("1,MF 7 - 8:15pm", 3);
             TimeSlot timeSlot = parser.getTimeSlotList().get(0);
             List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
             assertEquals(2, daysOfWeek.size());
@@ -215,7 +215,7 @@ class TimeSlotParserTest {
         // minutesEnd: 710
         {
             TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("MWF 11-11:50am", 4);
+            parser.parseLine("1,MWF 11-11:50am", 4);
             TimeSlot timeSlot = parser.getTimeSlotList().get(0);
             List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
             assertEquals(3, daysOfWeek.size());
@@ -231,7 +231,7 @@ class TimeSlotParserTest {
         // minutesEnd: 770
         {
             TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("MWF 12-12:50pm", 5);
+            parser.parseLine("1,MWF 12-12:50pm", 5);
             TimeSlot timeSlot = parser.getTimeSlotList().get(0);
             List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
             assertEquals(3, daysOfWeek.size());
@@ -247,7 +247,7 @@ class TimeSlotParserTest {
         // minutesEnd: 555
         {
             TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("TR 8:30 - 9:15am", 5);
+            parser.parseLine("1,TR 8:30 - 9:15am", 5);
             TimeSlot timeSlot = parser.getTimeSlotList().get(0);
             List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
             assertEquals(2, daysOfWeek.size());
@@ -262,7 +262,7 @@ class TimeSlotParserTest {
         // minutesEnd: 770
         {
             TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("MW 11am - 12:50pm", 6);
+            parser.parseLine("1,MW 11am - 12:50pm", 6);
             TimeSlot timeSlot = parser.getTimeSlotList().get(0);
             List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
             assertEquals(2, daysOfWeek.size());
@@ -277,7 +277,7 @@ class TimeSlotParserTest {
         // minutesEnd: 710
         {
             TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("TR 10 - 11:50am", 7);
+            parser.parseLine("1,TR 10 - 11:50am", 7);
             TimeSlot timeSlot = parser.getTimeSlotList().get(0);
             List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
             assertEquals(2, daysOfWeek.size());
@@ -292,7 +292,7 @@ class TimeSlotParserTest {
         // minutesEnd: 1035
         {
             TimeSlotParser parser = new TimeSlotParser();
-            parser.parseLine("MF 4 - 5:15", 8);
+            parser.parseLine("1,MF 4 - 5:15", 8);
             TimeSlot timeSlot = parser.getTimeSlotList().get(0);
             List<DayOfWeek> daysOfWeek = timeSlot.getDaysOfWeek();
             assertEquals(2, daysOfWeek.size());
