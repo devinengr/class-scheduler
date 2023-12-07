@@ -1,24 +1,17 @@
 package genetics.representation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Category {
 
-    private List<Outcome> outcomeList;
-    private boolean binary;
+    private BitString bitString;
 
-    public Category(int outcomeCount, boolean binary) {
-        this.outcomeList = new ArrayList<>();
-        this.binary = binary;
+    public BitString getBitString() {
+        return bitString;
     }
 
-    public int getOutcomeCount() {
-        return outcomeList.size();
+    public void setBitString(BitString bitString) {
+        this.bitString = bitString;
     }
 
-    public boolean isBinary() {
-        return binary;
-    }
+    public abstract int getOutcomeCount();
 
 }

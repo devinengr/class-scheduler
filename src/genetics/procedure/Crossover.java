@@ -1,19 +1,20 @@
 package genetics.procedure;
 
 import genetics.representation.BitString;
-import genetics.representation.Hypothesis;
-
-import java.util.ArrayList;
-import java.util.List;
+import genetics.representation.Population;
 
 public class Crossover {
 
     private BitString mask;
-    private List<Hypothesis> hypotheses;
+    private Population population;
 
-    public Crossover(BitString mask) {
-        this.hypotheses = new ArrayList<>();
+    public Crossover(BitString mask, Population population) {
         this.mask = mask;
+        this.population = population;
+    }
+
+    public void execute() {
+
     }
 
 }

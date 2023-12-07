@@ -2,6 +2,7 @@ package implementation.util;
 
 public enum BoardType {
 
+    NONE(0),
     CHALK(1),
     WHITE(2),
     ;

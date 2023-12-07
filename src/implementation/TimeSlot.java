@@ -1,6 +1,7 @@
 package implementation;
 
 import genetics.representation.Category;
+import genetics.util.BitStringGenerator;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -8,13 +9,38 @@ import java.util.List;
 
 public class TimeSlot extends Category {
 
+    private static List<TimeSlot> timeSlotList = new ArrayList<>();
+
     private List<DayOfWeek> daysOfWeek;
     private int minutesStart;
     private int minutesEnd;
 
     public TimeSlot() {
-        super(0, false);
         this.daysOfWeek = new ArrayList<>();
+        timeSlotList.add(this);
+    }
+
+    public static TimeSlot getTimeSlotByIndex(int index) {
+        return timeSlotList.get(index);
+    }
+
+    public static int getNumberOfTimeSlots() {
+        return timeSlotList.size();
+    }
+
+    /**
+     * call after initializing all objects
+     */
+    public static void initializeBitStringData() {
+        BitStringGenerator bitGen = new BitStringGenerator(timeSlotList.get(0));
+        timeSlotList.forEach(slot -> {
+            slot.setBitString(bitGen.next());
+        });
+    }
+
+    @Override
+    public int getOutcomeCount() {
+        return timeSlotList.size();
     }
 
     public void addDayOfWeek(DayOfWeek dayOfWeek) {

@@ -8,7 +8,15 @@ public class Population {
     private List<Hypothesis> hypothesisList;
 
     public Population() {
-        this.hypothesisList = new ArrayList<>();
+        hypothesisList = new ArrayList<>();
+    }
+
+    public void addHypothesis(Hypothesis hypothesis) {
+        hypothesisList.add(hypothesis);
+    }
+
+    public List<Hypothesis> getHypothesisList() {
+        return new ArrayList<>(hypothesisList);
     }
 
 }
