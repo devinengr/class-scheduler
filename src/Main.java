@@ -25,13 +25,6 @@ public class Main {
         TimeSlot.initializeBitStringData();
         Professor.initializeBitStringData();
         CourseSection.initializeBitStringData();
-
-        for (Category cat : CourseSection.getSection(1).getOutcomeList()) {
-            CourseSection sec = (CourseSection) cat;
-            System.out.println("--- A. Section " + sec.getSectionAbsolute());
-            System.out.println("Number " + sec.getCourseNumber());
-            System.out.println("R. Section " + sec.getSectionRelative());
-        }
     }
 
 }

@@ -1,13 +1,8 @@
 package genetics.procedure;
 
-import constraints.Constraint;
 import genetics.representation.BitString;
-import genetics.representation.Category;
-import genetics.representation.Hypothesis;
 import genetics.representation.Population;
 import implementation.model.Model;
-
-import java.util.List;
 
 public class Crossover {
 
@@ -21,18 +16,22 @@ public class Crossover {
         this.population = population;
     }
 
-    public void evaluate() {
-        List<Constraint> constraints = model.getConstraints();
+    private void evaluateFitness() {
+        FitnessEvaluator evaluator = new FitnessEvaluator(population, model);
+        evaluator.evaluateFitness();
+    }
+
+    private void performCrossover() {
+        // todo
     }
 
     public void execute() {
-        for (Hypothesis hypothesis : population.getHypothesisList()) {
-            List<Category> categories = hypothesis.getCategories();
-
-
-            // evaluate with ConstraintEvaluator
-            // assign a fitness value
-        }
+        evaluateFitness();
+        // todo what to do after fitness eval?
+        // todo how to choose hypotheses?
+        // todo how to filter bad hypotheses when we have a 2:2 mapping?
+        // todo check the slides and learn more
+        performCrossover();
     }
 
 }
