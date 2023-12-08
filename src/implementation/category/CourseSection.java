@@ -14,7 +14,7 @@ public class CourseSection extends Category {
     private int sectionAbsolute;
     private int courseNumber;
     private int sectionRelative;
-    private int units;
+    private int numberOfCredits;
     private TypePref typePref;
 
     public CourseSection() {
@@ -80,12 +80,12 @@ public class CourseSection extends Category {
         this.sectionRelative = sectionRelative;
     }
 
-    public int getUnits() {
-        return units;
+    public int getNumberOfCredits() {
+        return numberOfCredits;
     }
 
-    public void setUnits(int units) {
-        this.units = units;
+    public void setNumberOfCredits(int numberOfCredits) {
+        this.numberOfCredits = numberOfCredits;
     }
 
     public TypePref getTypePref() {
