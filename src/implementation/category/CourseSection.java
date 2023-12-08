@@ -1,4 +1,4 @@
-package implementation;
+package implementation.category;
 
 import genetics.representation.Category;
 import genetics.util.BitStringGenerator;
@@ -34,6 +34,11 @@ public class CourseSection extends Category {
     @Override
     public int getOutcomeCount() {
         return sectionList.size();
+    }
+
+    @Override
+    public List<Category> getOutcomeList() {
+        return new ArrayList<>(sectionList);
     }
 
     public static CourseSection getSection(int sectionAbsolute) {

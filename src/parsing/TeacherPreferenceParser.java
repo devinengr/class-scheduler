@@ -1,6 +1,6 @@
 package parsing;
 
-import implementation.Professor;
+import implementation.category.Professor;
 import implementation.util.*;
 
 public class TeacherPreferenceParser implements FileParser {

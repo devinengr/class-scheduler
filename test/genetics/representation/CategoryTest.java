@@ -1,6 +1,6 @@
 package genetics.representation;
 
-import implementation.TimeSlot;
+import implementation.category.TimeSlot;
 import org.junit.jupiter.api.Test;
 
 class CategoryTest {

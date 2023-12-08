@@ -1,6 +1,6 @@
 package parsing;
 
-import implementation.ClassRoom;
+import implementation.category.ClassRoom;
 import implementation.util.BoardType;
 
 import java.util.ArrayList;

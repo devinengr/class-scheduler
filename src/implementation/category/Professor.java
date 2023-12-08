@@ -1,4 +1,4 @@
-package implementation;
+package implementation.category;
 
 import genetics.representation.Category;
 import genetics.util.BitStringGenerator;
@@ -33,6 +33,11 @@ public class Professor extends Category {
     @Override
     public int getOutcomeCount() {
         return professorList.size();
+    }
+
+    @Override
+    public List<Category> getOutcomeList() {
+        return new ArrayList<>(professorList);
     }
 
     public static int getNumberOfProfessors() {

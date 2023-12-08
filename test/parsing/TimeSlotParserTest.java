@@ -1,6 +1,6 @@
 package parsing;
 
-import implementation.TimeSlot;
+import implementation.category.TimeSlot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;

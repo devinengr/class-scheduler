@@ -1,6 +1,6 @@
 package parsing;
 
-import implementation.TimeSlot;
+import implementation.category.TimeSlot;
 
 import java.nio.CharBuffer;
 import java.time.DayOfWeek;
@@ -171,6 +171,7 @@ public class TimeSlotParser implements FileParser {
         String timeEnd = split[3];
         parseDaysOfWeek(timeSlot, daysOfWeek);
         parseTime(timeSlot, timeStart, timeEnd);
+        timeSlot.initializeTimesOfDay();
         timeSlotList.add(timeSlot);
     }
 

@@ -1,7 +1,7 @@
-import implementation.ClassRoom;
-import implementation.CourseSection;
-import implementation.Professor;
-import implementation.TimeSlot;
+import implementation.category.ClassRoom;
+import implementation.category.CourseSection;
+import implementation.category.Professor;
+import implementation.category.TimeSlot;
 import parsing.*;
 
 public class Main {
@@ -22,26 +22,6 @@ public class Main {
         TimeSlot.initializeBitStringData();
         Professor.initializeBitStringData();
         CourseSection.initializeBitStringData();
-
-        for (int i = 1; i <= ClassRoom.getNumberOfClassRooms(); i++) {
-            ClassRoom room = ClassRoom.getClassRoomByRoomNumber(i);
-            System.out.println(room.getBitString().getBitString());
-        }
-
-        for (int i = 0; i < TimeSlot.getNumberOfTimeSlots(); i++) {
-            String bit = TimeSlot.getTimeSlotByIndex(i).getBitString().getBitString();
-            System.out.println(bit);
-        }
-
-        for (int i = 1; i <= Professor.getNumberOfProfessors(); i++) {
-            String bit = Professor.getProfessorByID(i).getBitString().getBitString();
-            System.out.println(bit);
-        }
-
-        for (int i = 1; i <= CourseSection.getNumberOfCourseSections(); i++) {
-            String bit = CourseSection.getSection(i).getBitString().getBitString();
-            System.out.println(bit);
-        }
     }
 
 }

@@ -1,6 +1,5 @@
-package implementation;
+package implementation.category;
 
-import genetics.representation.BitString;
 import genetics.representation.Category;
 import genetics.util.BitStringGenerator;
 import implementation.util.BoardType;
@@ -37,6 +36,11 @@ public class ClassRoom extends Category {
     @Override
     public int getOutcomeCount() {
         return classRoomList.size();
+    }
+
+    @Override
+    public List<Category> getOutcomeList() {
+        return new ArrayList<>(classRoomList);
     }
 
     /**

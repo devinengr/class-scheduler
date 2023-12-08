@@ -1,6 +1,6 @@
 package parsing;
 
-import implementation.ClassRoom;
+import implementation.category.ClassRoom;
 import implementation.util.BoardType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;

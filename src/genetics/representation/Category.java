@@ -1,5 +1,7 @@
 package genetics.representation;
 
+import java.util.List;
+
 public abstract class Category {
 
     private BitString bitString;
@@ -13,5 +15,7 @@ public abstract class Category {
     }
 
     public abstract int getOutcomeCount();
+
+    public abstract List<Category> getOutcomeList();
 
 }

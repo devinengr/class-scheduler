@@ -1,6 +1,6 @@
 package implementation.util;
 
-import implementation.CourseSection;
+import implementation.category.CourseSection;
 
 import java.util.HashMap;
 import java.util.Map;
