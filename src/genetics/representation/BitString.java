@@ -6,6 +6,21 @@ public class BitString {
     private int outcomeCount;
     private int digitCount;
 
+    public BitString(String bitString) {
+        this.bitString = bitString;
+        this.digitCount = bitString.length();
+        this.outcomeCount = -1;
+    }
+
+    public BitString(Hypothesis hypothesis) {
+        this.bitString = "";
+        for (Category category : hypothesis.getCategories()) {
+            bitString += category.getBitString().getBitString();
+        }
+        this.digitCount = bitString.length();
+        this.outcomeCount = -1;
+    }
+
     public BitString(Category category) {
         this.outcomeCount = category.getOutcomeCount();
         this.digitCount = getNumberOfDigitsInBitString(outcomeCount);

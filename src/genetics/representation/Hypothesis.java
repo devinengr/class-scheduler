@@ -1,17 +1,16 @@
 package genetics.representation;
 
-import implementation.category.ClassRoom;
-import implementation.category.CourseSection;
-import implementation.category.Professor;
-import implementation.category.TimeSlot;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hypothesis {
+public class Hypothesis implements Comparable<Hypothesis> {
 
     private List<Category> categories;
     private int fitness;
+
+    public Hypothesis() {
+        this.categories = new ArrayList<>();
+    }
 
     public void addCategory(Category category) {
         categories.add(category);
@@ -26,6 +25,10 @@ public class Hypothesis {
         return null;
     }
 
+    public BitString getFullBitString() {
+        return new BitString(this);
+    }
+
     public List<Category> getCategories() {
         return new ArrayList<>(categories);
     }
@@ -36,6 +39,11 @@ public class Hypothesis {
 
     public int getFitness() {
         return fitness;
+    }
+
+    @Override
+    public int compareTo(Hypothesis other) {
+        return Integer.compare(fitness, other.getFitness());
     }
 
 }
