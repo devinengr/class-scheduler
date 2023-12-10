@@ -2,6 +2,7 @@ package implementation.model;
 
 import constraints.Constraint;
 import constraints.concrete.basic_model.*;
+import genetics.representation.Category;
 
 import java.util.ArrayList;
 import java.util.List;

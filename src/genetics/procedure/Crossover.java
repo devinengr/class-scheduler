@@ -1,33 +1,25 @@
 package genetics.procedure;
 
 import genetics.representation.BitString;
+import genetics.representation.BitStringDecoder;
 import genetics.representation.Hypothesis;
 import genetics.representation.Population;
-import implementation.model.Model;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Crossover {
 
-    public static final int FITNESS_THRESHOLD = 97;
-    public static final int POPULATION_SIZE = 100;
-    public static final int HYPOTHESES_TO_REPLACE_EACH_CROSSOVER = 50;
-    public static final int MUTATION_RATE = 5;
-
-    private Model model;
     private BitString mask;
     private Population population;
 
-    public Crossover(Model model, BitString mask, Population population) {
-        this.model = model;
+    public Crossover(BitString mask, Population population) {
         this.mask = mask;
         this.population = population;
     }
 
-    private void evaluateFitness() {
-        FitnessEvaluator evaluator = new FitnessEvaluator(population, model);
-        evaluator.evaluateFitness();
+    public void setPopulation(Population population) {
+        this.population = population;
     }
 
     private BitString createChild(BitString bit1, BitString bit2, boolean maskMode) {
@@ -53,51 +45,38 @@ public class Crossover {
         return new BitString(child);
     }
 
-    private void performCrossover() {
+    private Population performCrossover() {
         List<Hypothesis> hypList = population.getHypothesisList();
         Collections.sort(hypList);
         Collections.reverse(hypList);
-
+        Population popNew = new Population();
+        BitStringDecoder decoder = new BitStringDecoder();
         for (int i = 0; i + 1 < hypList.size(); i += 1) {
-            // SELECTION
             Hypothesis hyp1 = hypList.get(i);
-            if (hyp1.getFitness() >= FITNESS_THRESHOLD) {
+            if (hyp1.passesFitnessThreshold()) {
+                popNew.addHypothesis(hyp1);
                 continue;
             }
-            i += 1;
             Hypothesis hyp2 = hypList.get(i + 1);
-
-            // CROSSOVER
             BitString bit1 = hyp1.getFullBitString();
             BitString bit2 = hyp2.getFullBitString();
             BitString child1 = createChild(bit1, bit2, true);
             BitString child2 = createChild(bit1, bit2, false);
-
+            Hypothesis child1New = decoder.decodeFullBitString(hyp2, child1);
+            Hypothesis child2New = decoder.decodeFullBitString(hyp2, child2);
+            popNew.addHypothesis(child1New);
+            popNew.addHypothesis(child2New);
             // temp
             System.out.println(child1.getBitString());
             System.out.println(child2.getBitString());
-
-            // todo generate a new population
+            // end temp
+            i += 1;
         }
-
-        // MUTATION
-        // todo (invert 1 random bit on m random hypotheses)
+        return popNew;
     }
 
-    // todo create a way to decode bitstrings back into
-    // todo the new category combinations that they represent
-    // todo if a combination doesn't exist, low fitness value
-    // todo or something else
-
-    public void execute() {
-        // todo generate p hypotheses at random
-
-        evaluateFitness();
-
-        // todo hypotheses below the threshold: perform roulette wheel selection
-        // todo to account for hypotheses pruned, randomly generate new hypotheses
-
-        performCrossover();
+    public Population execute() {
+        return performCrossover();
     }
 
 }

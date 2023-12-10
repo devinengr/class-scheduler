@@ -14,6 +14,15 @@ public abstract class Category {
         this.bitString = bitString;
     }
 
+    public Category getCategoryWithBitString(BitString bitString) {
+        for (Category category : getOutcomeList()) {
+            if (category.getBitString() == bitString) {
+                return category;
+            }
+        }
+        return null;
+    }
+
     public abstract int getOutcomeCount();
 
     public abstract List<Category> getOutcomeList();

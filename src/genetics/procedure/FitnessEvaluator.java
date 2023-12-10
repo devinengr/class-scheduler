@@ -8,12 +8,32 @@ import implementation.model.Model;
 
 public class FitnessEvaluator {
 
+    public static final int ACCEPTABLE_PROPORTION = 95;
+
     private Population population;
     private Model model;
 
     public FitnessEvaluator(Population population, Model model) {
         this.population = population;
         this.model = model;
+    }
+
+    public void setPopulation(Population population) {
+        this.population = population;
+    }
+
+    public boolean populationIsAcceptable() {
+        int amountSuccess = 0;
+        for (Hypothesis hypothesis : population.getHypothesisList()) {
+            if (hypothesis.passesFitnessThreshold()) {
+                amountSuccess++;
+            }
+        }
+        int size = population.getHypothesisList().size();
+        if ((float) amountSuccess / (float) size >= ACCEPTABLE_PROPORTION) {
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -18,6 +18,7 @@ public class ConstraintEachSectionAssignedExactlyOnce implements Constraint {
                     violationCount.addViolationUnacceptable();
                 }
             }
+            // todo needs some work
         }
     }
 

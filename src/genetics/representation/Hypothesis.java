@@ -7,6 +7,7 @@ public class Hypothesis implements Comparable<Hypothesis> {
 
     private List<Category> categories;
     private int fitness;
+    private boolean passesFitnessThreshold = false;
 
     public Hypothesis() {
         this.categories = new ArrayList<>();
@@ -29,6 +30,10 @@ public class Hypothesis implements Comparable<Hypothesis> {
         return new BitString(this);
     }
 
+    public void setFullBitString(BitString bitString) {
+        // todo update categories with new data using decoder
+    }
+
     public List<Category> getCategories() {
         return new ArrayList<>(categories);
     }
@@ -39,6 +44,14 @@ public class Hypothesis implements Comparable<Hypothesis> {
 
     public int getFitness() {
         return fitness;
+    }
+
+    public boolean passesFitnessThreshold() {
+        return passesFitnessThreshold;
+    }
+
+    public void setPassesFitnessThreshold(boolean passesFitnessThreshold) {
+        this.passesFitnessThreshold = passesFitnessThreshold;
     }
 
     @Override
