@@ -30,8 +30,7 @@ public class BasicModel implements Model {
                 new ConstraintNo4CreditSectionGets3CreditTime(),
                 new ConstraintRoomGetsAtMostOneSectionDuringTimeOfDay(),
                 new ConstraintMWFAndTRCoursesWithinDeltaW(),
-                new ConstraintEachSectionAssignedExactlyOnce(),
-                new ConstraintAllCombosIJKAssigned0Or1()
+                new ConstraintEachSectionAssignedExactlyOnce()
         ));
     }
 

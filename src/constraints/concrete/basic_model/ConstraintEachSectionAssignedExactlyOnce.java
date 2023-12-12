@@ -24,7 +24,7 @@ public class ConstraintEachSectionAssignedExactlyOnce implements Constraint {
             }
         }
         if (numberOfCourseSections != sectionIDs.size()) {
-            // todo invalid number of course sections
+            // this is handled by FitnessEvaluator
         }
     }
 

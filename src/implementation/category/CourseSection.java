@@ -7,7 +7,7 @@ import implementation.util.TypePref;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseSection extends Category {
+public class CourseSection extends Category implements Comparable<CourseSection> {
 
     private static List<CourseSection> sectionList = new ArrayList<>();
 
@@ -104,4 +104,8 @@ public class CourseSection extends Category {
         return false;
     }
 
+    @Override
+    public int compareTo(CourseSection o) {
+        return Integer.compare(sectionAbsolute, o.sectionAbsolute);
+    }
 }

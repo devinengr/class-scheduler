@@ -5,8 +5,10 @@ import constraints.ViolationCount;
 import genetics.representation.Hypothesis;
 import genetics.representation.Population;
 import implementation.category.CourseSection;
+import implementation.category.TimeSlot;
 import implementation.model.Model;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,23 @@ public class FitnessEvaluator {
 
     public FitnessEvaluator(Model model) {
         this.model = model;
+    }
+
+    public int numberOfTR(Population population) {
+        int sum = 0;
+        for (Hypothesis hyp : population.getHypothesisList()) {
+            List<DayOfWeek> days = hyp.getCategory(TimeSlot.class).getDaysOfWeek();
+            if (days.contains(DayOfWeek.TUESDAY) && days.contains(DayOfWeek.THURSDAY)) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    public int numberOfMWF(Population population) {
+        int size = population.getHypothesisList().size();
+        int tr = numberOfTR(population);
+        return size - tr;
     }
 
     public int numberOfMissingSections(Population population) {
@@ -64,7 +83,7 @@ public class FitnessEvaluator {
 
         for (Hypothesis hypothesis : population.getHypothesisList()) {
             ViolationCount vc = hypothesis.getViolationCount();
-            int vioNet = vc.getViolationsUnacceptable() * 8 + vc.getViolationsAcceptable();
+            int vioNet = vc.getViolationsUnacceptable() * 8 + vc.getViolationsAcceptable() * 4;
             int fitness = 100 - vioNet;
             if (fitness < 0) {
                 fitness = 0;

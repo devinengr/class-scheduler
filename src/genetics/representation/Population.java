@@ -11,6 +11,10 @@ public class Population {
         hypothesisList = new ArrayList<>();
     }
 
+    public Population(List<Hypothesis> hypothesisList) {
+        this.hypothesisList = hypothesisList;
+    }
+
     public void addHypothesis(Hypothesis hypothesis) {
         hypothesisList.add(hypothesis);
     }
