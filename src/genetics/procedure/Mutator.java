@@ -10,19 +10,13 @@ import java.util.Random;
 
 public class Mutator {
 
-    private Population population;
     private int mutationRate;
 
-    public Mutator(Population population, int mutationRate) {
-        this.population = population;
+    public Mutator(int mutationRate) {
         this.mutationRate = mutationRate;
     }
 
-    public void setPopulation(Population population) {
-        this.population = population;
-    }
-
-    private List<Integer> getIndicesToMutate() {
+    private List<Integer> getIndicesToMutate(Population population) {
         Random rng = new Random();
         int listSize = population.getHypothesisList().size();
         int mutationCount = (int) ((float) listSize * ((float) mutationRate / 100.0f));
@@ -37,9 +31,9 @@ public class Mutator {
         return indicesToMutate;
     }
 
-    public void mutate() {
+    public void mutate(Population population) {
         Random rng = new Random();
-        List<Integer> indicesToMutate = getIndicesToMutate();
+        List<Integer> indicesToMutate = getIndicesToMutate(population);
         List<Hypothesis> hyps = population.getHypothesisList();
         for (int index : indicesToMutate) {
             String bit = hyps.get(index).getFullBitString().getBitString();

@@ -1,7 +1,7 @@
 package constraints.concrete.basic_model;
 
 import constraints.Constraint;
-import constraints.ViolationCount;
+import constraints.concrete.basic_model.util.RoomTimePair;
 import genetics.representation.Hypothesis;
 import genetics.representation.Population;
 import implementation.category.ClassRoom;
@@ -10,18 +10,20 @@ import implementation.category.TimeSlot;
 public class ConstraintRoomGetsAtMostOneSectionDuringTimeOfDay implements Constraint {
 
     @Override
-    public void evaluate(Population population, Hypothesis hypothesis, ViolationCount violationCount) {
-        ClassRoom classRoom = hypothesis.getCategory(ClassRoom.class);
+    public void evaluate(Population population) {
+        RoomTimePair.reset();
+
         for (Hypothesis hyp : population.getHypothesisList()) {
             ClassRoom room = hyp.getCategory(ClassRoom.class);
-            if (classRoom.getRoomNumber() == room.getRoomNumber()) {
-                TimeSlot time1 = hypothesis.getCategory(TimeSlot.class);
-                TimeSlot time2 = hyp.getCategory(TimeSlot.class);
-                if (time1.collidesByDay(time2)) {
-                    if (time1.collidesByTimeOfDay(time2)) {
-                        violationCount.addViolationUnacceptable();
-                    }
-                }
+            TimeSlot time = hyp.getCategory(TimeSlot.class);
+
+            RoomTimePair pair = RoomTimePair.findBy(room, time);
+            if (pair == null) {
+                pair = new RoomTimePair(room, time);
+            }
+
+            if (RoomTimePair.timeOfDayClashesOnTheSameDay(pair)) {
+                hyp.getViolationCount().addViolationUnacceptable();
             }
         }
     }

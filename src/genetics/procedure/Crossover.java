@@ -11,15 +11,9 @@ import java.util.List;
 public class Crossover {
 
     private BitString mask;
-    private Population population;
 
-    public Crossover(BitString mask, Population population) {
+    public Crossover(BitString mask) {
         this.mask = mask;
-        this.population = population;
-    }
-
-    public void setPopulation(Population population) {
-        this.population = population;
     }
 
     private BitString createChild(BitString bit1, BitString bit2, boolean maskMode) {
@@ -45,7 +39,7 @@ public class Crossover {
         return new BitString(child);
     }
 
-    private Population performCrossover() {
+    private Population performCrossover(Population population) {
         List<Hypothesis> hypList = population.getHypothesisList();
         Collections.sort(hypList);
         Collections.reverse(hypList);
@@ -66,17 +60,13 @@ public class Crossover {
             Hypothesis child2New = decoder.decodeFullBitString(hyp2, child2);
             popNew.addHypothesis(child1New);
             popNew.addHypothesis(child2New);
-            // temp
-            System.out.println(child1.getBitString());
-            System.out.println(child2.getBitString());
-            // end temp
             i += 1;
         }
         return popNew;
     }
 
-    public Population execute() {
-        return performCrossover();
+    public Population execute(Population population) {
+        return performCrossover(population);
     }
 
 }

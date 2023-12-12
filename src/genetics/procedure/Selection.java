@@ -5,19 +5,13 @@ import genetics.representation.Population;
 
 public class Selection {
 
-    private Population population;
     private int fitnessThreshold;
 
-    public Selection(Population population, int fitnessThreshold) {
-        this.population = population;
+    public Selection(int fitnessThreshold) {
         this.fitnessThreshold = fitnessThreshold;
     }
 
-    public void setPopulation(Population population) {
-        this.population = population;
-    }
-
-    public void select() {
+    public void select(Population population) {
         for (Hypothesis hyp : population.getHypothesisList()) {
             if (hyp.getFitness() >= fitnessThreshold) {
                 hyp.setPassesFitnessThreshold(true);

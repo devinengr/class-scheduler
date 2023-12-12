@@ -1,5 +1,7 @@
 package genetics.representation;
 
+import java.util.List;
+
 public class BitString {
 
     private String bitString;
@@ -12,9 +14,9 @@ public class BitString {
         this.outcomeCount = -1;
     }
 
-    public BitString(Hypothesis hypothesis) {
+    public BitString(List<Category> categoryList) {
         this.bitString = "";
-        for (Category category : hypothesis.getCategories()) {
+        for (Category category : categoryList) {
             bitString += category.getBitString().getBitString();
         }
         this.digitCount = bitString.length();

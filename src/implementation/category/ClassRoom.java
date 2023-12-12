@@ -69,4 +69,13 @@ public class ClassRoom extends Category {
         this.boardType = boardType;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof ClassRoom) {
+            ClassRoom other = (ClassRoom) o;
+            return other.roomNumber == roomNumber;
+        }
+        return false;
+    }
+
 }

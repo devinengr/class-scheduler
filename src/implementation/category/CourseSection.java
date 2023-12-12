@@ -95,5 +95,13 @@ public class CourseSection extends Category {
     public void setTypePref(TypePref typePref) {
         this.typePref = typePref;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof CourseSection) {
+            CourseSection other = (CourseSection) o;
+            return other.getSectionAbsolute() == sectionAbsolute;
+        }
+        return false;
+    }
 
 }

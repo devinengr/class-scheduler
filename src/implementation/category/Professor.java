@@ -78,5 +78,13 @@ public class Professor extends Category {
     public void setTeacherSatisfaction(TeacherSatisfaction teacherSatisfaction) {
         this.teacherSatisfaction = teacherSatisfaction;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Professor) {
+            Professor other = (Professor) o;
+            return other.getTeacherID() == teacherID;
+        }
+        return false;
+    }
 
 }

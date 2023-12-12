@@ -3,7 +3,6 @@ package implementation.category;
 import genetics.representation.Category;
 import genetics.util.BitStringGenerator;
 import implementation.util.TimeOfDay;
-import implementation.util.WeekDay;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -22,6 +21,24 @@ public class TimeSlot extends Category {
         this.daysOfWeek = new ArrayList<>();
         this.timesOfDay = new ArrayList<>();
         timeSlotList.add(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof TimeSlot) {
+            TimeSlot other = (TimeSlot) o;
+            if (timesOfDay.equals(other.timesOfDay)) {
+                if (daysOfWeek.equals(other.daysOfWeek)) {
+                    if (minutesStart == other.minutesStart) {
+                        if (minutesEnd == other.minutesEnd) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
     }
 
     public static TimeSlot getTimeSlotByIndex(int index) {

@@ -9,7 +9,7 @@ public class ConstraintMWFAndTRCoursesWithinDeltaW implements Constraint {
 
 
     @Override
-    public void evaluate(Population population, Hypothesis hypothesis, ViolationCount violationCount) {
+    public void evaluate(Population population) {
 
     }
 }

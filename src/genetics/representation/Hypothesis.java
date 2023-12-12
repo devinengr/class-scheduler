@@ -1,5 +1,7 @@
 package genetics.representation;
 
+import constraints.ViolationCount;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,10 +9,28 @@ public class Hypothesis implements Comparable<Hypothesis> {
 
     private List<Category> categories;
     private int fitness;
+    private ViolationCount violationCount;
     private boolean passesFitnessThreshold = false;
+    private BitString fullBitString;
 
     public Hypothesis() {
         this.categories = new ArrayList<>();
+        this.violationCount = new ViolationCount();
+    }
+
+    @Override
+    public Hypothesis clone() {
+        Hypothesis clone = new Hypothesis();
+        clone.categories = new ArrayList<>(categories);
+        clone.fitness = fitness;
+        clone.passesFitnessThreshold = passesFitnessThreshold;
+        clone.fullBitString = fullBitString;
+        clone.violationCount = violationCount;
+        return clone;
+    }
+
+    public ViolationCount getViolationCount() {
+        return violationCount;
     }
 
     public void addCategory(Category category) {
@@ -27,11 +47,11 @@ public class Hypothesis implements Comparable<Hypothesis> {
     }
 
     public BitString getFullBitString() {
-        return new BitString(this);
+        return fullBitString;
     }
 
-    public void setFullBitString(BitString bitString) {
-        // todo update categories with new data using decoder
+    public void setFullBitString(BitString fullBitString) {
+        this.fullBitString = fullBitString;
     }
 
     public List<Category> getCategories() {

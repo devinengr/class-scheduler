@@ -16,7 +16,7 @@ public abstract class Category {
 
     public Category getCategoryWithBitString(BitString bitString) {
         for (Category category : getOutcomeList()) {
-            if (category.getBitString() == bitString) {
+            if (category.getBitString().getBitString().equalsIgnoreCase(bitString.getBitString())) {
                 return category;
             }
         }
