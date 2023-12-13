@@ -52,17 +52,25 @@ public class Main {
 
         System.out.println("DONE");
         for (Hypothesis hyp : population.getHypothesisList()) {
-            int secID = hyp.getCategory(CourseSection.class).getSectionAbsolute();
-            int roomNum = hyp.getCategory(ClassRoom.class).getRoomNumber();
-            TimeSlot slot = hyp.getCategory(TimeSlot.class);
-            int profID = hyp.getCategory(Professor.class).getTeacherID();
-            System.out.print("Sec: " + secID);
-            System.out.print("\t| Prof: " + profID);
-            System.out.print("\t| Room: " + roomNum);
-            System.out.print("\t| T_Start: " + slot.getMinutesStart());
-            System.out.print("\t| T_End: " + slot.getMinutesEnd());
-            System.out.print("\t\t| T_TOD: " + slot.getTimesOfDay());
-            System.out.print("\t\t\t\t| T_Days: " + slot.getDaysOfWeek());
+            CourseSection sec = hyp.getCategory(CourseSection.class);
+            ClassRoom room = hyp.getCategory(ClassRoom.class);
+            TimeSlot time = hyp.getCategory(TimeSlot.class);
+            Professor prof = hyp.getCategory(Professor.class);
+
+            System.out.print("Sec: " + sec.getSectionAbsolute());
+            System.out.print("\t| Prof: " + prof.getTeacherID());
+            System.out.print("\t| Room: " + room.getRoomNumber());
+            // System.out.print("\t| T_Start: " + time.getMinutesStart());
+            // System.out.print("\t| T_End: " + time.getMinutesEnd());
+            // System.out.print("\t\t| T_TOD: " + slot.getTimesOfDay());
+            // System.out.print("\t\t\t\t| T_Days: " + slot.getDaysOfWeek());
+
+//            System.out.print("\t| BPref: " + prof.getTeacherPreference().getBoardType());
+//            System.out.print("\t| BActu: " + room.getBoardType());
+//            System.out.print("\t| TPref: " + prof.getTeacherPreference().getTypePref());
+//            System.out.print("\t| TActu: " + sec.getTypePref());
+//            System.out.print("\t| Min,Max: " + prof.getTeacherPreference().getMinSections() + ", "
+//                                            + prof.getTeacherPreference().getMaxSections());
             System.out.println();
         }
 

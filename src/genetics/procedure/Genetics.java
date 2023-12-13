@@ -10,11 +10,11 @@ import implementation.model.TeacherPreferenceModel;
 
 public class Genetics {
 
-    public static final int FITNESS_THRESHOLD = 92;
+    public static final int FITNESS_THRESHOLD = 90;
     public static int POPULATION_SIZE = 0;
-    public static final int HYPOTHESES_TO_PRUNE_PER_ITER = 1;
+    public static final int HYPOTHESES_TO_PRUNE_PER_ITER = 0;
     public static final int MUTATION_RATE = 30;
-    public static final int ACCEPTABLE_FITNESS = 92;
+    public static final int ACCEPTABLE_FITNESS = 90;
 
     public Population run(Model model) {
         POPULATION_SIZE = CourseSection.getNumberOfCourseSections();
