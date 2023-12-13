@@ -7,14 +7,16 @@ import implementation.model.*;
 
 public class Genetics {
 
-    public static final int FITNESS_THRESHOLD = 90;
+    public static final int FITNESS_THRESHOLD = 85;
     public static int POPULATION_SIZE = 0;
-    public static final int HYPOTHESES_TO_PRUNE_PER_ITER = 0;
-    public static final int MUTATION_RATE = 40;
-    public static final int ACCEPTABLE_FITNESS = 90;
+    public static final int HYPOTHESES_TO_PRUNE_PER_ITER = 1;
+    public static final int MUTATION_RATE = 10;
+    public static final int MUTATION_PROBABILITY_PER_ITER_OUT_OF_1000 = 1;
+    public static final int ACCEPTABLE_FITNESS = 85;
 
     public Population run(Model model) {
         POPULATION_SIZE = CourseSection.getNumberOfCourseSections();
+
         PopulationGenerator populationGenerator = new PopulationGenerator();
         Population popCurrent = null;
 
@@ -22,7 +24,8 @@ public class Genetics {
             popCurrent = populationGenerator.newPopulationBasicModel(POPULATION_SIZE);
         } else if (model instanceof BasicTeacherModel
                 || model instanceof TeacherPreferenceModel
-                || model instanceof TeacherDifferenceModel) {
+                || model instanceof TeacherDifferenceModel
+                || model instanceof TeacherSatisfactionModel) {
             popCurrent = populationGenerator.newPopulationBasicTeacherModel(POPULATION_SIZE);
         }
 
@@ -32,13 +35,21 @@ public class Genetics {
         Crossover crossover = new Crossover(CrossoverMaskGenerator.singlePointCrossover(popCurrent));
         RouletteWheel rouletteWheel = new RouletteWheel();
         evaluator.evaluateFitness(popCurrent);
+
         while (!evaluator.populationIsAcceptable(popCurrent)) {
             evaluator.evaluateFitness(popCurrent);              // fitness eval
             selection.select(popCurrent);                       // selection and pruning
+
             popCurrent = rouletteWheel.pruneByLowestFitness(popCurrent);
             popCurrent = crossover.execute(popCurrent);         // crossover
-            mutator.mutate(popCurrent);                         // mutation
+
             popCurrent = rouletteWheel.pruneInvalidBitStrings(popCurrent); // clear un-decodable hypotheses
+            if (mutator.willMutateThisRound(MUTATION_PROBABILITY_PER_ITER_OUT_OF_1000)) {
+                mutator.mutate(popCurrent);
+            }
+            popCurrent = rouletteWheel.pruneInvalidBitStrings(popCurrent); // clear un-decodable hypotheses
+
+
             int size = popCurrent.getHypothesisList().size();   // add new random hypotheses to new generation
             int amountNeeded = POPULATION_SIZE - size;
 
@@ -46,11 +57,13 @@ public class Genetics {
                 populationGenerator.addToPopulationBasicModel(popCurrent, amountNeeded);
             } else if (model instanceof BasicTeacherModel
                     || model instanceof TeacherPreferenceModel
-                    || model instanceof TeacherDifferenceModel) {
+                    || model instanceof TeacherDifferenceModel
+                    || model instanceof TeacherSatisfactionModel) {
                 populationGenerator.addToPopulationBasicTeacherModel(popCurrent, amountNeeded);
             }
 
             evaluator.evaluateFitness(popCurrent);              // fitness eval
+
             int sumGood = 0;                                    // print progress
             for (Hypothesis hypothesis : popCurrent.getHypothesisList()) {
                 if (hypothesis.getFitness() >= ACCEPTABLE_FITNESS) {

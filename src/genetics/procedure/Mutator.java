@@ -1,6 +1,7 @@
 package genetics.procedure;
 
 import genetics.representation.BitString;
+import genetics.representation.BitStringDecoder;
 import genetics.representation.Hypothesis;
 import genetics.representation.Population;
 
@@ -31,10 +32,20 @@ public class Mutator {
         return indicesToMutate;
     }
 
+    public boolean willMutateThisRound(int probability) {
+        Random rng = new Random();
+        int rand = rng.nextInt(0, 1000);
+        if (rand < probability) {
+            return true;
+        }
+        return false;
+    }
+
     public void mutate(Population population) {
         Random rng = new Random();
         List<Integer> indicesToMutate = getIndicesToMutate(population);
         List<Hypothesis> hyps = population.getHypothesisList();
+        BitStringDecoder decoder = new BitStringDecoder();
         for (int index : indicesToMutate) {
             String bit = hyps.get(index).getFullBitString().getBitString();
             char[] bits = bit.toCharArray();
@@ -44,8 +55,10 @@ public class Mutator {
             } else {
                 bits[bitIndex] = '1';
             }
-            String newBits = new String(bits);
-            hyps.get(index).setFullBitString(new BitString(newBits));
+            BitString newBits = new BitString(new String(bits));
+            Hypothesis hypNew = decoder.decodeFullBitString(hyps.get(index), newBits);
+            population.removeHypothesis(hyps.get(index));
+            population.addHypothesis(hypNew);
         }
     }
 

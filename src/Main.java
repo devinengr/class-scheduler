@@ -6,10 +6,7 @@ import implementation.category.ClassRoom;
 import implementation.category.CourseSection;
 import implementation.category.Professor;
 import implementation.category.TimeSlot;
-import implementation.model.BasicModel;
-import implementation.model.Model;
-import implementation.model.TeacherDifferenceModel;
-import implementation.model.TeacherPreferenceModel;
+import implementation.model.*;
 import parsing.*;
 
 import java.util.Collections;
@@ -38,7 +35,7 @@ public class Main {
         CourseSection.initializeBitStringData();
 
         Genetics genetics = new Genetics();
-        Model model = new TeacherDifferenceModel();
+        Model model = new TeacherSatisfactionModel();
         Population population = genetics.run(model);
         printResults(model, population);
     }
@@ -68,6 +65,9 @@ public class Main {
             System.out.print("\t| Room: " + room.getRoomNumber());
 
             System.out.format("\t| Teaching: %d classes", numberOfSectionsTeaching.get(prof));
+
+            int sat = prof.getTeacherSatisfaction().getPreferenceLevelForCourseSection(sec);
+            System.out.print("\t| Sat [0=best]: " + sat);
 
             // System.out.print("\t| T_Start: " + time.getMinutesStart());
             // System.out.print("\t| T_End: " + time.getMinutesEnd());

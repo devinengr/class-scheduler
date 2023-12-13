@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class FitnessEvaluator {
 
-    public static final int ACCEPTABLE_PROPORTION = 100;
+    public static final int ACCEPTABLE_PROPORTION = 95;
 
     private Model model;
 
@@ -52,6 +52,10 @@ public class FitnessEvaluator {
     }
 
     public int numberOfMissingSections(Population population) {
+        return getMissingSectionIDs(population).size();
+    }
+
+    public List<Integer> getMissingSectionIDs(Population population) {
         List<Integer> found = new ArrayList<>();
         List<Integer> missing = new ArrayList<>();
         for (Hypothesis hyp : population.getHypothesisList()) {
@@ -62,10 +66,14 @@ public class FitnessEvaluator {
                 missing.add(i);
             }
         }
-        return missing.size();
+        return missing;
     }
 
     public int numberOfMissingProfessors(Population population) {
+        return getMissingProfessorIDs(population).size();
+    }
+
+    public List<Integer> getMissingProfessorIDs(Population population) {
         List<Integer> found = new ArrayList<>();
         List<Integer> missing = new ArrayList<>();
         for (Hypothesis hyp : population.getHypothesisList()) {
@@ -76,7 +84,32 @@ public class FitnessEvaluator {
                 missing.add(i);
             }
         }
-        return missing.size();
+        return missing;
+    }
+
+    public void destroyFitnessForDuplicateSections(Population population) {
+        List<Integer> secsFound = new ArrayList<>();
+        for (Hypothesis hyp : population.getHypothesisList()) {
+            CourseSection sec = hyp.getCategory(CourseSection.class);
+            if (secsFound.contains(sec.getSectionAbsolute())) {
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+                hyp.getViolationCount().addViolationUnacceptable();
+            } else {
+                secsFound.add(sec.getSectionAbsolute());
+            }
+        }
     }
 
     public boolean populationIsAcceptable(Population population) {
@@ -111,9 +144,12 @@ public class FitnessEvaluator {
         for (Constraint constraint : model.getConstraints()) {
             constraint.evaluate(population);
         }
+        destroyFitnessForDuplicateSections(population); // bias against duplicates
         for (Hypothesis hypothesis : population.getHypothesisList()) {
             ViolationCount vc = hypothesis.getViolationCount();
-            int vioNet = vc.getViolationsUnacceptable() * 8 + vc.getViolationsAcceptable() * 4;
+            int vioNet = vc.getViolationsUnacceptable() * 8
+                        + vc.getViolationsAcceptable() * 3
+                        + vc.getViolationLevelTeacherSatisfaction() * 2;
             int fitness = 100 - vioNet;
             if (fitness < 0) {
                 fitness = 0;

@@ -10,7 +10,8 @@ import constraints.concrete.teacher_satisfaction_model.ConstraintWeighTeacherSec
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeacherDifferenceModel implements Model {
+
+public class TeacherSatisfactionModel implements Model {
 
     @Override
     public List<Constraint> getConstraints() {
@@ -35,8 +36,10 @@ public class TeacherDifferenceModel implements Model {
                 new ConstraintTeacherTeachingWithinMinAndMaxSections(),
 
                 // teacher difference model
-                new ConstraintTeacherAssignmentsWithinDeltaW()
+                new ConstraintTeacherAssignmentsWithinDeltaW(),
+
+                // teacher satisfaction model
+                new ConstraintWeighTeacherSectionPreferences()
         ));
     }
-
 }

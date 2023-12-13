@@ -19,6 +19,10 @@ public class Population {
         hypothesisList.add(hypothesis);
     }
 
+    public void removeHypothesis(Hypothesis hypothesis) {
+        hypothesisList.remove(hypothesis);
+    }
+
     public List<Hypothesis> getHypothesisList() {
         return new ArrayList<>(hypothesisList);
     }
