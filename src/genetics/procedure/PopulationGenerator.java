@@ -6,12 +6,45 @@ import genetics.representation.Hypothesis;
 import genetics.representation.Population;
 import implementation.category.ClassRoom;
 import implementation.category.CourseSection;
+import implementation.category.Professor;
 import implementation.category.TimeSlot;
 
 import java.util.List;
 import java.util.Random;
 
 public class PopulationGenerator {
+
+    // todo nastiest duplicate code ever
+    public Population newPopulationBasicTeacherModel(int amountNeeded) {
+        Random rng = new Random();
+        int randomCourseSection = 0;
+        int randomClassRoomNumber = 0;
+        int randomTimeSlotIndex = 0;
+        int randomProfessorID = 0;
+        Population population = new Population();
+
+        for (int i = 0; i < amountNeeded; i++) {
+            randomCourseSection = rng.nextInt(1, CourseSection.getNumberOfCourseSections() + 1);
+            randomClassRoomNumber = rng.nextInt(1, ClassRoom.getNumberOfClassRooms() + 1);
+            randomTimeSlotIndex = rng.nextInt(0, TimeSlot.getNumberOfTimeSlots());
+            randomProfessorID = rng.nextInt(1, Professor.getNumberOfProfessors() + 1);
+
+            Category courseSection = CourseSection.getSection(randomCourseSection);
+            Category classRoom = ClassRoom.getClassRoomByRoomNumber(randomClassRoomNumber);
+            Category timeSlot = TimeSlot.getTimeSlotByIndex(randomTimeSlotIndex);
+            Category professor = Professor.getProfessorByID(randomProfessorID);
+
+            Hypothesis hypothesis = new Hypothesis();
+            hypothesis.addCategory(courseSection);
+            hypothesis.addCategory(classRoom);
+            hypothesis.addCategory(timeSlot);
+            hypothesis.addCategory(professor);
+            hypothesis.setFullBitString(new BitString(List.of(courseSection, classRoom, timeSlot, professor)));
+            population.addHypothesis(hypothesis);
+        }
+
+        return population;
+    }
 
     public Population newPopulationBasicModel(int amountNeeded) {
         Random rng = new Random();
@@ -50,6 +83,14 @@ public class PopulationGenerator {
                     return;
                 }
             }
+        }
+    }
+
+    // todo nasty code smell and duplicate
+    public void addToPopulationBasicTeacherModel(Population population, int amountNeeded) {
+        Population newPop = newPopulationBasicTeacherModel(amountNeeded);
+        for (Hypothesis hyp : newPop.getHypothesisList()) {
+            population.addHypothesis(hyp);
         }
     }
 

@@ -3,20 +3,31 @@ package genetics.procedure;
 import genetics.representation.Hypothesis;
 import genetics.representation.Population;
 import implementation.category.CourseSection;
+import implementation.model.BasicModel;
+import implementation.model.BasicTeacherModel;
 import implementation.model.Model;
+import implementation.model.TeacherPreferenceModel;
 
 public class Genetics {
 
-    public static final int FITNESS_THRESHOLD = 100;
+    public static final int FITNESS_THRESHOLD = 92;
     public static int POPULATION_SIZE = 0;
     public static final int HYPOTHESES_TO_PRUNE_PER_ITER = 1;
-    public static final int MUTATION_RATE = 5;
-    public static final int ACCEPTABLE_FITNESS = 100;
+    public static final int MUTATION_RATE = 30;
+    public static final int ACCEPTABLE_FITNESS = 92;
 
     public Population run(Model model) {
         POPULATION_SIZE = CourseSection.getNumberOfCourseSections();
         PopulationGenerator populationGenerator = new PopulationGenerator();
-        Population popCurrent = populationGenerator.newPopulationBasicModel(POPULATION_SIZE);
+        Population popCurrent = null;
+
+        if (model instanceof BasicModel) {
+            popCurrent = populationGenerator.newPopulationBasicModel(POPULATION_SIZE);
+        } else if (model instanceof BasicTeacherModel
+                || model instanceof TeacherPreferenceModel) {
+            popCurrent = populationGenerator.newPopulationBasicTeacherModel(POPULATION_SIZE);
+        }
+
         FitnessEvaluator evaluator = new FitnessEvaluator(model);
         Mutator mutator = new Mutator(MUTATION_RATE);
         Selection selection = new Selection(FITNESS_THRESHOLD);
@@ -32,7 +43,14 @@ public class Genetics {
             popCurrent = rouletteWheel.pruneInvalidBitStrings(popCurrent); // clear un-decodable hypotheses
             int size = popCurrent.getHypothesisList().size();   // add new random hypotheses to new generation
             int amountNeeded = POPULATION_SIZE - size;
-            populationGenerator.addToPopulationBasicModel(popCurrent, amountNeeded);
+
+            if (model instanceof BasicModel) {
+                populationGenerator.addToPopulationBasicModel(popCurrent, amountNeeded);
+            } else if (model instanceof BasicTeacherModel
+                    || model instanceof TeacherPreferenceModel) {
+                populationGenerator.addToPopulationBasicTeacherModel(popCurrent, amountNeeded);
+            }
+
             evaluator.evaluateFitness(popCurrent);              // fitness eval
             int sumGood = 0;                                    // print progress
             for (Hypothesis hypothesis : popCurrent.getHypothesisList()) {

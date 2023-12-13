@@ -1,4 +1,4 @@
-package constraints.concrete.basic_model.util;
+package constraints.concrete.util;
 
 import implementation.category.ClassRoom;
 import implementation.category.TimeSlot;
@@ -29,10 +29,6 @@ public class RoomTimePair {
             }
         }
         return null;
-    }
-
-    public static boolean timeOfDayClashesOnTheSameDay(RoomTimePair other) {
-        return timeOfDayClashesOnTheSameDay(other.classRoom, other.timeSlot);
     }
 
     public static boolean timeOfDayClashesOnTheSameDay(ClassRoom classRoom, TimeSlot timeSlot) {

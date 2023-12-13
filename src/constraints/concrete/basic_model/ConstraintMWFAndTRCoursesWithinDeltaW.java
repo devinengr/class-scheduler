@@ -6,7 +6,6 @@ import genetics.representation.Hypothesis;
 import genetics.representation.Population;
 import implementation.category.CourseSection;
 import implementation.category.TimeSlot;
-import implementation.model.BasicModel;
 
 import java.time.DayOfWeek;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ConstraintMWFAndTRCoursesWithinDeltaW implements Constraint {
 
     @Override
     public void evaluate(Population population) {
-        FitnessEvaluator evaluator = new FitnessEvaluator(new BasicModel());
+        FitnessEvaluator evaluator = new FitnessEvaluator(null);
         int countMWF = evaluator.numberOfMWF(population);
         int countTR = evaluator.numberOfTR(population);
         for (Hypothesis hyp : population.getHypothesisList()) {

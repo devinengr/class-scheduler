@@ -1,22 +1,17 @@
-import genetics.procedure.Crossover;
 import genetics.procedure.FitnessEvaluator;
 import genetics.procedure.Genetics;
-import genetics.representation.BitString;
-import genetics.representation.Category;
 import genetics.representation.Hypothesis;
 import genetics.representation.Population;
 import implementation.category.ClassRoom;
 import implementation.category.CourseSection;
 import implementation.category.Professor;
 import implementation.category.TimeSlot;
-import implementation.model.BasicModel;
 import implementation.model.Model;
+import implementation.model.TeacherPreferenceModel;
 import parsing.*;
 
-import java.sql.Time;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Main {
 
@@ -40,7 +35,7 @@ public class Main {
         CourseSection.initializeBitStringData();
 
         Genetics genetics = new Genetics();
-        Model model = new BasicModel();
+        Model model = new TeacherPreferenceModel();
         Population population = genetics.run(model);
         printResults(model, population);
     }
@@ -57,10 +52,12 @@ public class Main {
 
         System.out.println("DONE");
         for (Hypothesis hyp : population.getHypothesisList()) {
-            Integer secID = hyp.getCategory(CourseSection.class).getSectionAbsolute();
-            Integer roomNum = hyp.getCategory(ClassRoom.class).getRoomNumber();
+            int secID = hyp.getCategory(CourseSection.class).getSectionAbsolute();
+            int roomNum = hyp.getCategory(ClassRoom.class).getRoomNumber();
             TimeSlot slot = hyp.getCategory(TimeSlot.class);
+            int profID = hyp.getCategory(Professor.class).getTeacherID();
             System.out.print("Sec: " + secID);
+            System.out.print("\t| Prof: " + profID);
             System.out.print("\t| Room: " + roomNum);
             System.out.print("\t| T_Start: " + slot.getMinutesStart());
             System.out.print("\t| T_End: " + slot.getMinutesEnd());

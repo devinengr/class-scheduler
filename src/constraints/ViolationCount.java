@@ -10,6 +10,11 @@ public class ViolationCount {
         this.violationCountUnacceptable = 0;
     }
 
+    public void reset() {
+        this.violationCountAcceptable = 0;
+        this.violationCountUnacceptable = 0;
+    }
+
     public void addViolationAcceptable() {
         violationCountAcceptable++;
     }

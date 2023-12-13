@@ -65,6 +65,7 @@ public class FitnessEvaluator {
         if (acceptedProportion >= ACCEPTABLE_PROPORTION) {
             if (numberOfMissingSections(population) != 0) {
                 return false;
+                // todo also check if every teacher is teaching maybe
             }
             return true;
         }
@@ -77,10 +78,12 @@ public class FitnessEvaluator {
      * respective hypothesis.
      */
     public void evaluateFitness(Population population) {
+        for (Hypothesis hyp : population.getHypothesisList()) {
+            hyp.getViolationCount().reset();
+        }
         for (Constraint constraint : model.getConstraints()) {
             constraint.evaluate(population);
         }
-
         for (Hypothesis hypothesis : population.getHypothesisList()) {
             ViolationCount vc = hypothesis.getViolationCount();
             int vioNet = vc.getViolationsUnacceptable() * 8 + vc.getViolationsAcceptable() * 4;

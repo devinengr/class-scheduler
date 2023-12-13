@@ -1,24 +1,24 @@
-package constraints.concrete.basic_model;
+package constraints.concrete.basic_teacher_model;
 
 import constraints.Constraint;
-import constraints.concrete.util.RoomTimePair;
+import constraints.concrete.util.ProfessorTimePair;
 import genetics.representation.Hypothesis;
 import genetics.representation.Population;
-import implementation.category.ClassRoom;
+import implementation.category.Professor;
 import implementation.category.TimeSlot;
 
-public class ConstraintRoomGetsAtMostOneSectionDuringTimeOfDay implements Constraint {
+public class ConstraintTeacherGetsOneSectionPerTimeOfDay implements Constraint {
 
     @Override
     public void evaluate(Population population) {
-        RoomTimePair.reset();
+        ProfessorTimePair.reset();
         for (Hypothesis hyp : population.getHypothesisList()) {
-            ClassRoom room = hyp.getCategory(ClassRoom.class);
+            Professor professor = hyp.getCategory(Professor.class);
             TimeSlot time = hyp.getCategory(TimeSlot.class);
-            if (RoomTimePair.timeOfDayClashesOnTheSameDay(room, time)) {
+            if (ProfessorTimePair.timeOfDayClashesOnTheSameDay(professor, time)) {
                 hyp.getViolationCount().addViolationUnacceptable();
             } else {
-                new RoomTimePair(room, time);
+                new ProfessorTimePair(professor, time);
             }
         }
     }
