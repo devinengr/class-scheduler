@@ -11,7 +11,7 @@ public class Genetics {
     public static int POPULATION_SIZE = 0;
     public static final int HYPOTHESES_TO_PRUNE_PER_ITER = 0;
     public static final int MUTATION_RATE = 40;
-    public static final int ACCEPTABLE_FITNESS = 93;
+    public static final int ACCEPTABLE_FITNESS = 90;
 
     public Population run(Model model) {
         POPULATION_SIZE = CourseSection.getNumberOfCourseSections();

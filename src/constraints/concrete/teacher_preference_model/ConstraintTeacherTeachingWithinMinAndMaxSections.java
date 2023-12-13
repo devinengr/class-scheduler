@@ -20,7 +20,7 @@ public class ConstraintTeacherTeachingWithinMinAndMaxSections implements Constra
             int minPref = prof.getTeacherPreference().getMinSections();
             int maxPref = prof.getTeacherPreference().getMaxSections();
             if (!(minPref <= sectionsTeaching && sectionsTeaching <= maxPref)) {
-                //hyp.getViolationCount().addViolationAcceptable();
+                hyp.getViolationCount().addViolationAcceptable();
             }
         }
     }

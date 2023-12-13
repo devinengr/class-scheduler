@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class ConstraintTeacherAssignmentsWithinDeltaW implements Constraint {
 
-    public static final int W_THRESHOLD = 3;
+    public static final int W_THRESHOLD = 4;
 
     private boolean withinDelta(int amount) {
         int numProf = Professor.getNumberOfProfessors();

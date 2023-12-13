@@ -89,10 +89,9 @@ public class FitnessEvaluator {
         int size = population.getHypothesisList().size();
         int acceptedProportion = (int) ((float) amountSuccess / (float) size * 100);
         if (acceptedProportion >= ACCEPTABLE_PROPORTION) {
-            if (numberOfMissingSections(population) != 0) {
-                if (numberOfMissingProfessors(population) != 0) {
-                    return false;
-                }
+            int missingSecs = numberOfMissingSections(population);
+            int missingProfs = numberOfMissingProfessors(population);
+            if (missingSecs != 0 || missingProfs != 0) {
                 return false;
             }
             return true;
