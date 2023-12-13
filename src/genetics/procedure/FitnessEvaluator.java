@@ -5,12 +5,15 @@ import constraints.ViolationCount;
 import genetics.representation.Hypothesis;
 import genetics.representation.Population;
 import implementation.category.CourseSection;
+import implementation.category.Professor;
 import implementation.category.TimeSlot;
 import implementation.model.Model;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FitnessEvaluator {
 
@@ -20,6 +23,15 @@ public class FitnessEvaluator {
 
     public FitnessEvaluator(Model model) {
         this.model = model;
+    }
+
+    public Map<Professor, Integer> numberOfSectionsTeaching(Population population) {
+        Map<Professor, Integer> numberOfSectionsTeaching = new HashMap<>();
+        for (Hypothesis hyp : population.getHypothesisList()) {
+            Professor prof = hyp.getCategory(Professor.class);
+            numberOfSectionsTeaching.put(prof, 1 + numberOfSectionsTeaching.getOrDefault(prof, 0));
+        }
+        return numberOfSectionsTeaching;
     }
 
     public int numberOfTR(Population population) {
@@ -53,6 +65,20 @@ public class FitnessEvaluator {
         return missing.size();
     }
 
+    public int numberOfMissingProfessors(Population population) {
+        List<Integer> found = new ArrayList<>();
+        List<Integer> missing = new ArrayList<>();
+        for (Hypothesis hyp : population.getHypothesisList()) {
+            found.add(hyp.getCategory(Professor.class).getTeacherID());
+        }
+        for (int i = 1; i <= Professor.getNumberOfProfessors(); i++) {
+            if (!found.contains(i)) {
+                missing.add(i);
+            }
+        }
+        return missing.size();
+    }
+
     public boolean populationIsAcceptable(Population population) {
         int amountSuccess = 0;
         for (Hypothesis hypothesis : population.getHypothesisList()) {
@@ -64,8 +90,10 @@ public class FitnessEvaluator {
         int acceptedProportion = (int) ((float) amountSuccess / (float) size * 100);
         if (acceptedProportion >= ACCEPTABLE_PROPORTION) {
             if (numberOfMissingSections(population) != 0) {
+                if (numberOfMissingProfessors(population) != 0) {
+                    return false;
+                }
                 return false;
-                // todo also check if every teacher is teaching maybe
             }
             return true;
         }

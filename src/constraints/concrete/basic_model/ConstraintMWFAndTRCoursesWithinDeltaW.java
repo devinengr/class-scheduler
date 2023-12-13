@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ConstraintMWFAndTRCoursesWithinDeltaW implements Constraint {
 
-    public static final int W_THRESHOLD = 2;
+    public static final int W_THRESHOLD = 5;
 
     private boolean withinDelta(int amount) {
         int numSec = CourseSection.getNumberOfCourseSections();

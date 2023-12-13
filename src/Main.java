@@ -6,12 +6,15 @@ import implementation.category.ClassRoom;
 import implementation.category.CourseSection;
 import implementation.category.Professor;
 import implementation.category.TimeSlot;
+import implementation.model.BasicModel;
 import implementation.model.Model;
+import implementation.model.TeacherDifferenceModel;
 import implementation.model.TeacherPreferenceModel;
 import parsing.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -35,7 +38,7 @@ public class Main {
         CourseSection.initializeBitStringData();
 
         Genetics genetics = new Genetics();
-        Model model = new TeacherPreferenceModel();
+        Model model = new TeacherDifferenceModel();
         Population population = genetics.run(model);
         printResults(model, population);
     }
@@ -50,7 +53,10 @@ public class Main {
         });
         population = new Population(hypList);
 
-        System.out.println("DONE");
+        System.out.println("\nDONE\n");
+
+        Map<Professor, Integer> numberOfSectionsTeaching = evaluator.numberOfSectionsTeaching(population);
+
         for (Hypothesis hyp : population.getHypothesisList()) {
             CourseSection sec = hyp.getCategory(CourseSection.class);
             ClassRoom room = hyp.getCategory(ClassRoom.class);
@@ -60,6 +66,9 @@ public class Main {
             System.out.print("Sec: " + sec.getSectionAbsolute());
             System.out.print("\t| Prof: " + prof.getTeacherID());
             System.out.print("\t| Room: " + room.getRoomNumber());
+
+            System.out.format("\t| Teaching: %d classes", numberOfSectionsTeaching.get(prof));
+
             // System.out.print("\t| T_Start: " + time.getMinutesStart());
             // System.out.print("\t| T_End: " + time.getMinutesEnd());
             // System.out.print("\t\t| T_TOD: " + slot.getTimesOfDay());
@@ -81,6 +90,10 @@ public class Main {
         System.out.println("Number of missing sections: " + evaluator.numberOfMissingSections(population));
         System.out.println("Number of TR: " + evaluator.numberOfTR(population));
         System.out.println("Number of MWF: " + evaluator.numberOfMWF(population));
+        System.out.println("Number of professors: " +
+                        (population.getHypothesisList().size()
+                                - evaluator.numberOfMissingProfessors(population)));
+        System.out.println("Number of missing professors: " + evaluator.numberOfMissingProfessors(population));
     }
 
 }
