@@ -15,6 +15,9 @@ import onl.devin.geneticsai.implementation.util.TimeOfDay;
 import onl.devin.geneticsai.implementation.util.TypePref;
 import onl.devin.geneticsai.implementation.util.WeekDay;
 import onl.devin.geneticsai.parsing.*;
+import onl.devin.geneticsai.parsing.config.ConfigParser;
+import onl.devin.geneticsai.parsing.config.ConfigValue;
+import onl.devin.geneticsai.parsing.config.ConfigValueCSV;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,11 +37,11 @@ public class Main {
         ClassRoomParser classRoomParser = new ClassRoomParser();
         CourseSectionParser courseSectionParser = new CourseSectionParser();
 
-        reader.parseFile("res/simulated_data/sim_teacher_satisfaction.csv", teacherSatisfactionParser);
-        reader.parseFile("res/simulated_data/sim_teacher_preference.csv", teacherPreferenceParser);
-        reader.parseFile("res/simulated_data/sim_classrooms_j.csv", classRoomParser);
-        reader.parseFile("res/simulated_data/sim_time_slots_k.csv", timeSlotParser);
-        reader.parseFile("res/simulated_data/sim_course_sections_i.csv", courseSectionParser);
+        reader.parseFile(ConfigValueCSV.PATH_TO_TEACHER_SATISFACTION_DATA.getPath(), teacherSatisfactionParser);
+        reader.parseFile(ConfigValueCSV.PATH_TO_TEACHER_PREFERENCE_DATA.getPath(), teacherPreferenceParser);
+        reader.parseFile(ConfigValueCSV.PATH_TO_CLASSROOMS_DATA.getPath(), classRoomParser);
+        reader.parseFile(ConfigValueCSV.PATH_TO_TIME_SLOTS_DATA.getPath(), timeSlotParser);
+        reader.parseFile(ConfigValueCSV.PATH_TO_COURSE_SECTIONS_DATA.getPath(), courseSectionParser);
 
         ClassRoom.initializeBitStringData();
         TimeSlot.initializeBitStringData();

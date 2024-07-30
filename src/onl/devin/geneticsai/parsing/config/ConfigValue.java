@@ -1,4 +1,4 @@
-package onl.devin.geneticsai.parsing;
+package onl.devin.geneticsai.parsing.config;
 
 public enum ConfigValue {
 

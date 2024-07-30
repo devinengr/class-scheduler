@@ -20,7 +20,6 @@ public class BasicTeacherModel implements Model {
                 new ConstraintRoomGetsAtMostOneSectionDuringTimeOfDay(),
                 new ConstraintMWFAndTRCoursesWithinDeltaW(),
                 new ConstraintEachSectionAssignedExactlyOnce(),
-
                 // basic teacher model
                 new ConstraintTeacherGetsOneSectionPerTimeOfDay()
         ));

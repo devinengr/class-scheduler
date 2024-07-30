@@ -3,8 +3,7 @@ package onl.devin.geneticsai.genetics.procedure;
 import onl.devin.geneticsai.genetics.representation.Category;
 import onl.devin.geneticsai.genetics.representation.Hypothesis;
 import onl.devin.geneticsai.genetics.representation.Population;
-import onl.devin.geneticsai.parsing.ConfigParser;
-import onl.devin.geneticsai.parsing.ConfigValue;
+import onl.devin.geneticsai.parsing.config.ConfigValue;
 
 import java.util.ArrayList;
 import java.util.Collections;

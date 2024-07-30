@@ -22,22 +22,16 @@ public class TeacherSatisfactionModel implements Model {
                 new ConstraintNo3CreditSectionGets4CreditTime(),
                 new ConstraintNo4CreditSectionGets3CreditTime(),
                 new ConstraintRoomGetsAtMostOneSectionDuringTimeOfDay(),
-                new ConstraintMWFAndTRCoursesWithinDeltaW(),
                 new ConstraintEachSectionAssignedExactlyOnce(),
-
                 // basic teacher model
                 new ConstraintTeacherGetsOneSectionPerTimeOfDay(),
-
                 // teacher preference model
                 new ConstraintTeacherGetsBoardPreference(),
-                new ConstraintTeacherGetsPureAppliedPreference(),
                 new ConstraintTeacherGetsTimeOfDayPreference(),
                 new ConstraintTeacherGetsWeekDayPreference(),
                 new ConstraintTeacherTeachingWithinMinAndMaxSections(),
-
                 // teacher difference model
                 new ConstraintTeacherAssignmentsWithinDeltaW(),
-
                 // teacher satisfaction model
                 new ConstraintWeighTeacherSectionPreferences()
         ));

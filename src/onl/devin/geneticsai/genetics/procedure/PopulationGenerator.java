@@ -8,7 +8,7 @@ import onl.devin.geneticsai.implementation.category.ClassRoom;
 import onl.devin.geneticsai.implementation.category.CourseSection;
 import onl.devin.geneticsai.implementation.category.Professor;
 import onl.devin.geneticsai.implementation.category.TimeSlot;
-import onl.devin.geneticsai.parsing.ConfigValue;
+import onl.devin.geneticsai.parsing.config.ConfigValue;
 
 import java.util.List;
 import java.util.Random;

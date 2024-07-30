@@ -4,8 +4,7 @@ import onl.devin.geneticsai.genetics.representation.Hypothesis;
 import onl.devin.geneticsai.genetics.representation.Population;
 import onl.devin.geneticsai.implementation.category.CourseSection;
 import onl.devin.geneticsai.implementation.model.*;
-import onl.devin.geneticsai.parsing.ConfigParser;
-import onl.devin.geneticsai.parsing.ConfigValue;
+import onl.devin.geneticsai.parsing.config.ConfigValue;
 
 public class Genetics {
 
