@@ -1,0 +1,47 @@
+######################################################################
+# Configuration file for the class scheduler.                        #
+# These options change the behavior of the genetic algorithm.        #
+# The algorithm can be configured to be more strict,                 #
+# but increasing strictness increases the time it takes to           #
+# find a solution. It's also possible for it to not find a           #
+# solution at all under the set of constraints given. It's a good    #
+# idea to find a balance between the level at which constraints      #
+# are met and the time it takes to solve the problem.                #
+######################################################################
+
+# Configuration value for the teacher tricriteria model.
+# Some courses are offered either MWF or TH. To balance
+# teacher workload across the week, the difference between
+# the number of MWF and TH sections a teacher is assigned to
+# should be minimal.
+DAY_DIFFERENCE_THRESHOLD = 3
+
+# Configuration value for the teacher tricriteria model.
+# This determines the number of sections a teacher can
+# be assigned to before their workload becomes undesirable.
+TEACHER_LOAD_THRESHOLD = 3
+
+# Configuration value for the teacher tricriteria model.
+# This is used in the calculation of how much a section assignment
+# can lose fitness when teacher preferences aren't met.
+TEACHER_SATISFACTION_WEIGHT = 2
+
+# When a section has a fitness value lower than this threshold,
+# it will be pruned before the next cycle.
+FITNESS_THRESHOLD = 85
+
+# The number of section assignments to prune per cycle.
+HYPOTHESES_TO_PRUNE_PER_ITER = 1
+
+# The number of section assignments to be mutated on a cycle that is a
+# mutation cycle (a cycle has mutations based on chance, determined by
+# MUTATION_PROBABLY_PER_ITER).
+MUTATION_RATE = 5
+
+# On each cycle, the likelihood that mutations will occur at a rate of MUTATION_RATE.
+MUTATION_PROBABILITY_PER_ITER_OUT_OF_1000 = 1
+
+# Similar to fitness threshold, but instead of being used for
+# pruning sections, this value is used to verify whether
+# the section is good enough to be a part of the final solution.
+ACCEPTABLE_FITNESS = 85

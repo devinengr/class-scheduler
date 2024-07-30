@@ -1,8 +1,9 @@
 package implementation.category;
 
-import implementation.util.TimeOfDay;
+import onl.devin.geneticsai.implementation.category.TimeSlot;
+import onl.devin.geneticsai.implementation.util.TimeOfDay;
 import org.junit.jupiter.api.Test;
-import parsing.TimeSlotParser;
+import onl.devin.geneticsai.parsing.TimeSlotParser;
 
 import java.util.List;
 
