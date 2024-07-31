@@ -13,7 +13,7 @@ public class CSVReader {
      * @param filePath relative file path
      * @param parser parser object that processes the file
      */
-    public void parseFile(String filePath, FileParser parser) {
+    public void parseFile(String filePath, FileParser parser) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             int lineNumber = 1;
@@ -21,8 +21,6 @@ public class CSVReader {
                 parser.parseLine(line, lineNumber);
                 lineNumber++;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

@@ -51,12 +51,7 @@ public class ConfigParser implements FileParser {
                 System.exit(0);
             }
         } else if (csvValue != null) {
-            if (new File(value).isFile()) {
-                csvValue.setPath(value);
-            } else {
-                System.out.println("Could not find " + value + ". Make sure it exists and you have permission to read it.");
-                System.exit(0);
-            }
+            csvValue.setPath(value);
         } else if (modelValue != null) {
             try {
                 ConfigValueModel model = ConfigValueModel.valueOf(value);
