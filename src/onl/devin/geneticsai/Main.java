@@ -23,6 +23,7 @@ public class Main {
             reader.parseFile("res/config.txt", configParser);
         } catch (IOException e) {
             ModelLogBuilder.log("Error reading config. Does it exist in res/config.txt?");
+            return;
         }
 
         TeacherPreferenceParser teacherPreferenceParser = new TeacherPreferenceParser();
