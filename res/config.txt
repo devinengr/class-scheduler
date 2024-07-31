@@ -13,8 +13,8 @@
 # comment the existing one. Lines are commented by placing a
 # hash sign (#) in front of them, and uncommented by removing
 # it.
-MODEL = BASIC
-# MODEL = BASIC_TEACHER
+# MODEL = BASIC
+MODEL = BASIC_TEACHER
 # MODEL = TEACHER_PREFERENCE
 # MODEL = TEACHER_DIFFERENCE
 # MODEL = TEACHER_SATISFACTION
