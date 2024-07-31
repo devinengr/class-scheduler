@@ -1,6 +1,6 @@
 # Class Scheduler
 
-Note: This file is a work in progress. A few changes also need to be made to make it possible to use different models and files. These changes will be made soon.
+
 
 # Description
 
@@ -30,15 +30,20 @@ Run the jar file alongside the provided example files to get an idea of what's g
 
 Specific files are required for specific models. Models are methods of solving the problem by using a specific set of inputs and constraints. The specific models this program implements are described in [Calvin Thach's thesis, "The University Class Scheduling Problem"](https://scholarworks.calstate.edu/concern/theses/v979v493k).
 
-The models this program implements are outlined in pages 6-16 of the linked paper. The sections below go over how to use each model.
+The models this program implements are outlined in pages 6-16 of the linked paper. The sections below go over each model.
 
+## Guide
+
+To use one of the below models, go into res/config.txt and change the MODEL field to match the model you want to use.
+
+By default, the tricriteria model is run on simulated data. If you'd like to use your own data, format it to match the format of the provided CSV files, then edit config.txt and modify the file fields to match the paths where your files are located.
+
+If you're using one of the more basic models, not all files are required, as they are not all used. See below for information about which files should be up to date and placed in the config file.
 
 ## Basic Model
 
 Description:
 * This is the most fundamental model that each of the following models builds off of, as it defines the fundamental constraints. Additionally, a goal of the basic model is to balance course sections across weekday time slots. For instance, there should be a roughly equal number of TH classes and MWF classes.
-
-How to use:
 
 Files required:
 * Classrooms
@@ -51,21 +56,17 @@ Description:
 
 * This model builds off of the basic model, but takes into account teachers in addition to classrooms, sections, and time slots. 
 
-How to use:
-
 Files required: 
 * Classrooms
 * Course sections
 * Time slots
-* Teacher preference **or** teacher satisfaction
+* Teacher preferences (contains teacher IDs)
 
 ## Teacher Preference Model
 
 Description:
 
 * This model builds off of the basic teacher model. In addition to taking teachers into account, it also takes their preferences into account, including which days of the week they prefer to teach, the type of classroom they want, etc. Teacher preferences have less weight (and thus less of an effect on fitness value), as they aren't required to ensure the schedule is viable.
-
-How to use:
 
 Files required:
 * Classrooms
@@ -79,8 +80,6 @@ Description:
 
 * This model minimizes the difference in number of course sections assigned to each teacher to balance the workload across all teachers. It does not minimize the difference between weekday time slots.
 
-How to use:
-
 Files required: 
 * Classrooms
 * Course sections
@@ -92,8 +91,6 @@ Files required:
 Description:
 
 * This model takes into account the course sections teachers prefer, and attempts to assign teachers to courses based on their section preferences.
-
-How to use:
 
 Files required: 
 * Classrooms
@@ -107,8 +104,6 @@ Files required:
 Description:
 
 * This model adds a weight to 3 constraints already implemented. It biases the basic model, teacher difference model, and the teacher satisfaction model. For instance, if teachers prefer equal workloads over preferred course sections, the teacher difference model can be weighed higher than the teacher satisfaction model to account for that preference.
-
-How to use:
 
 Files required: 
 
