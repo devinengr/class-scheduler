@@ -9,6 +9,17 @@
 # are met and the time it takes to solve the problem.                #
 ######################################################################
 
+# Uncomment the line containing the model you want to use and
+# comment the existing one. Lines are commented by placing a
+# hash sign (#) in front of them, and uncommented by removing
+# it.
+MODEL = BASIC
+# MODEL = BASIC_TEACHER
+# MODEL = TEACHER_PREFERENCE
+# MODEL = TEACHER_DIFFERENCE
+# MODEL = TEACHER_SATISFACTION
+# MODEL = TEACHER_TRICRITERIA
+
 # Paths to CSV files containing the course data that will be parsed
 # to determine an optimal set of class assignments.
 PATH_TO_CLASSROOMS_DATA = res/simulated_data/sim_classrooms_j.csv

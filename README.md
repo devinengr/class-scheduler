@@ -6,7 +6,7 @@ Note: This file is a work in progress. A few changes also need to be made to mak
 
 This program uses genetic algorithms to solve the university class scheduling problem.
 
-Note: This program is relatively basic in solving the scheduling program at a large scale. It is not thoroughly tested and may not work fully as expected. It is not meant for real-world use in its current state, and may work better for demonstration purposes. 
+Note: This program is relatively basic in solving the scheduling program at a large scale. It is not thoroughly tested and does not contain some necessary features. It is not meant for real-world use in its current state, and may work better for demonstration purposes. 
 
 # The Problem
 
@@ -36,7 +36,7 @@ The models this program implements are outlined in pages 6-16 of the linked pape
 ## Basic Model
 
 Description:
-* This is the most fundamental model that each of the following models builds off of, as it defines the fundamental constraints. Additionally, a goal of the basic model is to balance course sections across weekday timeslots. For instance, there should be a roughly equal number of TH classes and MWF classes.
+* This is the most fundamental model that each of the following models builds off of, as it defines the fundamental constraints. Additionally, a goal of the basic model is to balance course sections across weekday time slots. For instance, there should be a roughly equal number of TH classes and MWF classes.
 
 How to use:
 
@@ -49,38 +49,71 @@ Files required:
 
 Description:
 
+* This model builds off of the basic model, but takes into account teachers in addition to classrooms, sections, and time slots. 
+
 How to use:
 
 Files required: 
+* Classrooms
+* Course sections
+* Time slots
+* Teacher preference **or** teacher satisfaction
 
 ## Teacher Preference Model
 
 Description:
 
+* This model builds off of the basic teacher model. In addition to taking teachers into account, it also takes their preferences into account, including which days of the week they prefer to teach, the type of classroom they want, etc. Teacher preferences have less weight (and thus less of an effect on fitness value), as they aren't required to ensure the schedule is viable.
+
 How to use:
 
-Files required: 
+Files required:
+* Classrooms
+* Course sections
+* Time slots
+* Teacher preferences
 
 ## Teacher Difference Model
 
 Description:
 
+* This model minimizes the difference in number of course sections assigned to each teacher to balance the workload across all teachers. It does not minimize the difference between weekday time slots.
+
 How to use:
 
 Files required: 
+* Classrooms
+* Course sections
+* Time slots
+* Teacher preferences
 
 ## Teacher Satisfaction Model
 
 Description:
 
+* This model takes into account the course sections teachers prefer, and attempts to assign teachers to courses based on their section preferences.
+
 How to use:
 
 Files required: 
+* Classrooms
+* Course sections
+* Time slots
+* Teacher preferences
+* Teacher satisfaction
 
 ## Teacher Tricriteria Model
 
 Description:
 
+* This model adds a weight to 3 constraints already implemented. It biases the basic model, teacher difference model, and the teacher satisfaction model. For instance, if teachers prefer equal workloads over preferred course sections, the teacher difference model can be weighed higher than the teacher satisfaction model to account for that preference.
+
 How to use:
 
 Files required: 
+
+* Classrooms
+* Course sections
+* Time slots
+* Teacher preferences
+* Teacher satisfaction

@@ -7,7 +7,10 @@ import onl.devin.geneticsai.genetics.representation.Population;
 import onl.devin.geneticsai.implementation.category.CourseSection;
 import onl.devin.geneticsai.implementation.category.Professor;
 import onl.devin.geneticsai.implementation.category.TimeSlot;
+import onl.devin.geneticsai.implementation.model.BasicModel;
 import onl.devin.geneticsai.implementation.model.Model;
+import onl.devin.geneticsai.parsing.config.ConfigKeyModel;
+import onl.devin.geneticsai.parsing.config.ConfigParser;
 import onl.devin.geneticsai.parsing.config.ConfigValue;
 
 import java.time.DayOfWeek;
@@ -71,6 +74,10 @@ public class FitnessEvaluator {
     }
 
     public int numberOfMissingProfessors(Population population) {
+        if (ConfigKeyModel.MODEL.getModel() instanceof BasicModel) {
+            // this model does not use professors
+            return 0;
+        }
         return getMissingProfessorIDs(population).size();
     }
 

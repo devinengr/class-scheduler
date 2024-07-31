@@ -6,6 +6,7 @@ import onl.devin.geneticsai.constraints.concrete.basic_teacher_model.ConstraintT
 import onl.devin.geneticsai.constraints.concrete.teacher_difference_model.ConstraintTeacherAssignmentsWithinDeltaW;
 import onl.devin.geneticsai.constraints.concrete.teacher_preference_model.*;
 import onl.devin.geneticsai.constraints.concrete.teacher_satisfaction_model.ConstraintWeighTeacherSectionPreferences;
+import onl.devin.geneticsai.genetics.representation.Population;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,4 +37,10 @@ public class TeacherSatisfactionModel implements Model {
                 new ConstraintWeighTeacherSectionPreferences()
         ));
     }
+
+    @Override
+    public void printResults(Population population) {
+
+    }
+
 }

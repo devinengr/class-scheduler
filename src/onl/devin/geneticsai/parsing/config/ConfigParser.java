@@ -10,6 +10,10 @@ public class ConfigParser implements FileParser {
 
     @Override
     public void parseLine(String line, int lineNumber) {
+        if (line.startsWith("#")) {
+            return;
+        }
+
         String[] keyValuePair = line.split(" = ");
         if (keyValuePair.length <= 1) {
             return;
@@ -19,6 +23,7 @@ public class ConfigParser implements FileParser {
 
         ConfigValue configValue = null;
         ConfigValueCSV csvValue = null;
+        ConfigKeyModel modelValue = null;
 
         try {
             configValue = ConfigValue.valueOf(key);
@@ -28,6 +33,12 @@ public class ConfigParser implements FileParser {
 
         try {
             csvValue = ConfigValueCSV.valueOf(key);
+        } catch (IllegalArgumentException e) {
+            // do nothing
+        }
+
+        try {
+            modelValue = ConfigKeyModel.valueOf(key);
         } catch (IllegalArgumentException e) {
             // do nothing
         }
@@ -46,6 +57,15 @@ public class ConfigParser implements FileParser {
                 System.out.println("Could not find " + value + ". Make sure it exists and you have permission to read it.");
                 System.exit(0);
             }
+        } else if (modelValue != null) {
+            try {
+                ConfigValueModel model = ConfigValueModel.valueOf(value);
+                modelValue.setModel(model.getModel());
+            } catch (IllegalArgumentException e) {
+                System.out.println(value + " is not a valid model. See the README for valid model types.");
+                System.exit(0);
+            }
+
         } else {
             System.out.println(key + " was not found in the configuration options. Check config.txt for errors.");
             System.exit(0);

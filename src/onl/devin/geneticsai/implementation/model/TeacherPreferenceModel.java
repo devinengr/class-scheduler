@@ -4,6 +4,7 @@ import onl.devin.geneticsai.constraints.Constraint;
 import onl.devin.geneticsai.constraints.concrete.basic_model.*;
 import onl.devin.geneticsai.constraints.concrete.basic_teacher_model.ConstraintTeacherGetsOneSectionPerTimeOfDay;
 import onl.devin.geneticsai.constraints.concrete.teacher_preference_model.*;
+import onl.devin.geneticsai.genetics.representation.Population;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,11 @@ public class TeacherPreferenceModel implements Model {
                 new ConstraintTeacherGetsWeekDayPreference(),
                 new ConstraintTeacherTeachingWithinMinAndMaxSections()
         ));
+    }
+
+    @Override
+    public void printResults(Population population) {
+
     }
 
 }

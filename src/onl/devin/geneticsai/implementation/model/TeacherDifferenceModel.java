@@ -5,6 +5,7 @@ import onl.devin.geneticsai.constraints.concrete.basic_model.*;
 import onl.devin.geneticsai.constraints.concrete.basic_teacher_model.ConstraintTeacherGetsOneSectionPerTimeOfDay;
 import onl.devin.geneticsai.constraints.concrete.teacher_difference_model.ConstraintTeacherAssignmentsWithinDeltaW;
 import onl.devin.geneticsai.constraints.concrete.teacher_preference_model.*;
+import onl.devin.geneticsai.genetics.representation.Population;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,11 @@ public class TeacherDifferenceModel implements Model {
                 // teacher difference model
                 new ConstraintTeacherAssignmentsWithinDeltaW()
         ));
+    }
+
+    @Override
+    public void printResults(Population population) {
+
     }
 
 }

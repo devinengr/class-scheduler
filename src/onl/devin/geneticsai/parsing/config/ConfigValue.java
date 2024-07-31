@@ -29,8 +29,4 @@ public enum ConfigValue {
         this.value = value;
     }
 
-    public String getKey() {
-        return this.name();
-    }
-
 }
