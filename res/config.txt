@@ -15,10 +15,10 @@
 # it.
 # MODEL = BASIC
 # MODEL = BASIC_TEACHER
-MODEL = TEACHER_PREFERENCE
+# MODEL = TEACHER_PREFERENCE
 # MODEL = TEACHER_DIFFERENCE
 # MODEL = TEACHER_SATISFACTION
-# MODEL = TEACHER_TRICRITERIA
+MODEL = TEACHER_TRICRITERIA
 
 # Paths to CSV files containing the course data that will be parsed
 # to determine an optimal set of class assignments.
