@@ -1,6 +1,6 @@
 # Class Scheduler
 
-
+![class scheduler demo](assets/class_scheduler_demo.gif)
 
 # Description
 
