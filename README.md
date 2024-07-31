@@ -26,7 +26,13 @@ One of the ways to solve this problem is to apply a form of artificial intellige
 
 # Usage
 
-Run the jar file alongside the provided example files to get an idea of what's going on. If you want to use this program with your own data, ensure that your data follows the same format as the example CSVs.
+Run the jar file alongside the provided example files to get an idea of what's going on. Do this in a terminal window using the following command:
+
+```
+java -jar ClassScheduler.jar
+```
+
+If you want to use this program with your own data, ensure that your data follows the same format as the example CSVs.
 
 Specific files are required for specific models. Models are methods of solving the problem by using a specific set of inputs and constraints. The specific models this program implements are described in [Calvin Thach's thesis, "The University Class Scheduling Problem"](https://scholarworks.calstate.edu/concern/theses/v979v493k).
 
